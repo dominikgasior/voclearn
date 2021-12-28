@@ -14,7 +14,7 @@
     "format:write:all": "nx format:write --all",
     "lint:all": "nx run-many --target=lint --all --parallel",
     "dep-graph": "nx dep-graph",
-    "typeorm": "ts-node -O '{\"module\": \"commonjs\"}' -P tsconfig.base.json ./node_modules/.bin/typeorm"
+    "typeorm": "ts-node -O '{\"module\": \"commonjs\"}' -P tsconfig.base.json ./node_modules/.bin/typeorm --config libs/api/shared/framework/database/src/lib/config/typeorm-config.ts"
   },
   "private": true,
   "dependencies": {
