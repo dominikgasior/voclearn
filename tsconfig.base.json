@@ -20,6 +20,7 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
+      "@voclearn/api/shared/domain": ["libs/api/shared/domain/src/index.ts"],
       "@voclearn/api/shared/framework/config": [
         "libs/api/shared/framework/config/src/index.ts"
       ],
