@@ -22,6 +22,9 @@
     "paths": {
       "@voclearn/api/shared/framework/config": [
         "libs/api/shared/framework/config/src/index.ts"
+      ],
+      "@voclearn/api/shared/framework/database": [
+        "libs/api/shared/framework/database/src/index.ts"
       ]
     }
   },

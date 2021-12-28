@@ -76,6 +76,29 @@
       },
       "tags": ["scope:framework"]
     },
+    "api-shared-framework-database": {
+      "root": "libs/api/shared/framework/database",
+      "sourceRoot": "libs/api/shared/framework/database/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/shared/framework/database/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/shared/framework/database"],
+          "options": {
+            "jestConfig": "libs/api/shared/framework/database/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:framework"]
+    },
     "voclearn": {
       "projectType": "application",
       "root": "apps/voclearn",
