@@ -51,7 +51,30 @@
           }
         }
       },
-      "tags": []
+      "tags": ["scope:app"]
+    },
+    "api-shared-framework-config": {
+      "root": "libs/api/shared/framework/config",
+      "sourceRoot": "libs/api/shared/framework/config/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/shared/framework/config/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/shared/framework/config"],
+          "options": {
+            "jestConfig": "libs/api/shared/framework/config/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:framework"]
     },
     "voclearn": {
       "projectType": "application",

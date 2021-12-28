@@ -19,7 +19,11 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "paths": {}
+    "paths": {
+      "@voclearn/api/shared/framework/config": [
+        "libs/api/shared/framework/config/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
