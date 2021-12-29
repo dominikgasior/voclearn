@@ -74,7 +74,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["scope:domain"]
     },
     "api-shared-framework-config": {
       "root": "libs/api/shared/framework/config",
@@ -121,6 +121,100 @@
         }
       },
       "tags": ["scope:framework"]
+    },
+    "api-shared-infrastructure-firebase": {
+      "root": "libs/api/shared/infrastructure/firebase",
+      "sourceRoot": "libs/api/shared/infrastructure/firebase/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/api/shared/infrastructure/firebase/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/shared/infrastructure/firebase"],
+          "options": {
+            "jestConfig": "libs/api/shared/infrastructure/firebase/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:infrastructure"]
+    },
+    "api-shared-infrastructure-jwt": {
+      "root": "libs/api/shared/infrastructure/jwt",
+      "sourceRoot": "libs/api/shared/infrastructure/jwt/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/shared/infrastructure/jwt/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/shared/infrastructure/jwt"],
+          "options": {
+            "jestConfig": "libs/api/shared/infrastructure/jwt/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:infrastructure"]
+    },
+    "api-shared-rest-api": {
+      "root": "libs/api/shared/rest-api",
+      "sourceRoot": "libs/api/shared/rest-api/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/shared/rest-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/shared/rest-api"],
+          "options": {
+            "jestConfig": "libs/api/shared/rest-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:presentation"]
+    },
+    "api-vocabulary": {
+      "root": "libs/api/vocabulary",
+      "sourceRoot": "libs/api/vocabulary/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/vocabulary/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/vocabulary"],
+          "options": {
+            "jestConfig": "libs/api/vocabulary/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:presentation"]
     },
     "voclearn": {
       "projectType": "application",

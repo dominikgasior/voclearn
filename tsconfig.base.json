@@ -26,7 +26,17 @@
       ],
       "@voclearn/api/shared/framework/database": [
         "libs/api/shared/framework/database/src/index.ts"
-      ]
+      ],
+      "@voclearn/api/shared/infrastructure/firebase": [
+        "libs/api/shared/infrastructure/firebase/src/index.ts"
+      ],
+      "@voclearn/api/shared/infrastructure/jwt": [
+        "libs/api/shared/infrastructure/jwt/src/index.ts"
+      ],
+      "@voclearn/api/shared/rest-api": [
+        "libs/api/shared/rest-api/src/index.ts"
+      ],
+      "@voclearn/api/vocabulary": ["libs/api/vocabulary/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
