@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-import path from 'path';
+import { join, normalize } from 'path';
 
-const rootPath = path.normalize(__dirname + '/../../../../../../../../');
-const envPath = path.normalize(rootPath + 'apps/api/.env');
-const migrationsPath = path.normalize(__dirname + '../migrations');
+const rootPath = normalize(join(__dirname, '/../../../../../../../../'));
+const envPath = normalize(join(rootPath, 'apps/api/.env'));
+const migrationsPath = normalize(join(__dirname, '../migrations'));
 
 dotenv.config({ path: envPath });
 

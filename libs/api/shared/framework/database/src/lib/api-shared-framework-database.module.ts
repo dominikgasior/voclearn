@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfigService } from './config/database-config.service';
 import { ConfigModule } from '@nestjs/config';
 import databaseConfig from './config/database.config';
+import { vocabulary1640858296718 } from './migrations/1640858296718-vocabulary';
 
 @Module({
   imports: [ConfigModule.forFeature(databaseConfig)],
@@ -24,7 +25,8 @@ class ApiSharedFrameworkDatabaseConfigModule {}
           database: config.getName(),
           autoLoadEntities: true,
           migrationsRun: true,
-          migrations: [],
+          migrations: [vocabulary1640858296718],
+          logging: true,
         };
       },
       imports: [ApiSharedFrameworkDatabaseConfigModule],
