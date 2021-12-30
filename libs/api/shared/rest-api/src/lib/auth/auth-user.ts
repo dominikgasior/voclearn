@@ -1,9 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { DecodedJwtToken } from '@voclearn/api/shared/infrastructure/jwt';
-
-export interface AuthenticatedUser {
-  id: string;
-}
+import { AuthenticatedUser } from '@voclearn/api/shared/domain';
 
 export const AuthUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext): AuthenticatedUser => {

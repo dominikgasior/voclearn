@@ -12,9 +12,13 @@ export class AssociationEntity {
   @ManyToOne(() => WordEntity, (word) => word.associations, { nullable: false })
   word: WordEntity;
 
-  constructor(id: string, note: string, word: WordEntity) {
+  @Column()
+  userId: string;
+
+  constructor(id: string, note: string, word: WordEntity, userId: string) {
     this.id = id;
     this.note = note;
     this.word = word;
+    this.userId = userId;
   }
 }

@@ -24,15 +24,20 @@ export class WordEntity {
   @OneToMany(() => AssociationEntity, (association) => association.word)
   associations: AssociationEntity[];
 
+  @Column()
+  userId: string;
+
   constructor(
     id: string,
     value: string,
     wordGroup: WordGroupEntity,
-    associations: AssociationEntity[]
+    associations: AssociationEntity[],
+    userId: string
   ) {
     this.id = id;
     this.value = value;
     this.wordGroup = wordGroup;
     this.associations = associations;
+    this.userId = userId;
   }
 }

@@ -12,9 +12,13 @@ export class WordGroupEntity {
   @OneToMany(() => WordEntity, (word) => word.wordGroup)
   words: WordEntity[];
 
-  constructor(id: string, name: string, words: WordEntity[]) {
+  @Column()
+  userId: string;
+
+  constructor(id: string, name: string, words: WordEntity[], userId: string) {
     this.id = id;
     this.name = name;
     this.words = words;
+    this.userId = userId;
   }
 }

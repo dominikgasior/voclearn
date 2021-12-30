@@ -4,6 +4,7 @@ import { UpdateWordGroupDto } from './dto/update-word-group.dto';
 import { Repository } from 'typeorm';
 import { WordGroupEntity } from './word-group.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthenticatedUser } from '@voclearn/api/shared/domain';
 
 @Injectable()
 export class WordGroupService {
@@ -12,18 +13,29 @@ export class WordGroupService {
     private readonly repository: Repository<WordGroupEntity>
   ) {}
 
-  async create(dto: CreateWordGroupDto): Promise<void> {
-    const wordGroup = new WordGroupEntity(dto.id, dto.name, []);
+  async create(
+    dto: CreateWordGroupDto,
+    user: AuthenticatedUser
+  ): Promise<void> {
+    const wordGroup = new WordGroupEntity(dto.id, dto.name, [], user.id);
 
     await this.repository.save(wordGroup);
   }
 
-  findOne(id: string): Promise<WordGroupEntity> {
-    return this.repository.findOneOrFail(id);
+  async findOne(id: string, user: AuthenticatedUser): Promise<WordGroupEntity> {
+    const wordGroup = await this.repository.findOneOrFail(id);
+
+    WordGroupService.assertUserIsAuthorized(wordGroup, user);
+
+    return wordGroup;
   }
 
-  async update(id: string, dto: UpdateWordGroupDto): Promise<void> {
-    const wordGroup = await this.findOne(id);
+  async update(
+    id: string,
+    dto: UpdateWordGroupDto,
+    user: AuthenticatedUser
+  ): Promise<void> {
+    const wordGroup = await this.findOne(id, user);
 
     if (dto.name !== undefined) {
       wordGroup.name = dto.name;
@@ -32,9 +44,20 @@ export class WordGroupService {
     await this.repository.save(wordGroup);
   }
 
-  async remove(id: string): Promise<void> {
-    const wordGroup = await this.findOne(id);
+  async remove(id: string, user: AuthenticatedUser): Promise<void> {
+    const wordGroup = await this.findOne(id, user);
 
     await this.repository.remove(wordGroup);
+  }
+
+  private static assertUserIsAuthorized(
+    wordGroup: WordGroupEntity,
+    user: AuthenticatedUser
+  ): void {
+    if (wordGroup.userId !== user.id) {
+      throw new Error(
+        `User ${user.id} does not have access to word group ${wordGroup.id}`
+      );
+    }
   }
 }
