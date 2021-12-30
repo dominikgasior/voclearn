@@ -6,4 +6,4 @@ import { validate } from './env.validator';
   imports: [ConfigModule.forRoot({ validate, ignoreEnvFile: true })],
   exports: [ConfigModule],
 })
-export class ApiSharedFrameworkConfigModule {}
+export class AppConfigModule {}

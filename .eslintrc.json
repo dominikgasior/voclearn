@@ -41,19 +41,8 @@
                 ]
               },
               {
-                "sourceTag": "scope:framework",
-                "onlyDependOnLibsWithTags": [
-                  "scope:framework",
-                  "scope:presentation",
-                  "scope:infrastructure",
-                  "scope:application",
-                  "scope:domain"
-                ]
-              },
-              {
                 "sourceTag": "scope:app",
                 "onlyDependOnLibsWithTags": [
-                  "scope:framework",
                   "scope:presentation"
                 ]
               }

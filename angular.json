@@ -76,52 +76,6 @@
       },
       "tags": ["scope:domain"]
     },
-    "api-shared-framework-config": {
-      "root": "libs/api/shared/framework/config",
-      "sourceRoot": "libs/api/shared/framework/config/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["libs/api/shared/framework/config/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api/shared/framework/config"],
-          "options": {
-            "jestConfig": "libs/api/shared/framework/config/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": ["scope:framework"]
-    },
-    "api-shared-framework-database": {
-      "root": "libs/api/shared/framework/database",
-      "sourceRoot": "libs/api/shared/framework/database/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["libs/api/shared/framework/database/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api/shared/framework/database"],
-          "options": {
-            "jestConfig": "libs/api/shared/framework/database/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": ["scope:framework"]
-    },
     "api-shared-infrastructure-firebase": {
       "root": "libs/api/shared/infrastructure/firebase",
       "sourceRoot": "libs/api/shared/infrastructure/firebase/src",

@@ -10,7 +10,7 @@ import { vocabulary1640858296718 } from './migrations/1640858296718-vocabulary';
   providers: [DatabaseConfigService],
   exports: [DatabaseConfigService],
 })
-class ApiSharedFrameworkDatabaseConfigModule {}
+class AppDatabaseConfigModule {}
 
 @Module({
   imports: [
@@ -29,10 +29,9 @@ class ApiSharedFrameworkDatabaseConfigModule {}
           logging: true,
         };
       },
-      imports: [ApiSharedFrameworkDatabaseConfigModule],
+      imports: [AppDatabaseConfigModule],
       inject: [DatabaseConfigService],
     }),
   ],
-  exports: [TypeOrmModule],
 })
-export class ApiSharedFrameworkDatabaseModule {}
+export class AppDatabaseModule {}
