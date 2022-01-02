@@ -9,13 +9,13 @@ import { Email } from './dto/email';
 import { IdToken } from './dto/id-token';
 
 @Injectable()
-export class AuthRepository {
+export class UserRepository {
   constructor(
     private readonly firebaseAdmin: FirebaseAdmin,
     private readonly firebaseApi: FirebaseApi
   ) {}
 
-  async register(user: User, password: Password): Promise<void> {
+  async add(user: User, password: Password): Promise<void> {
     await this.firebaseAdmin.auth().createUser({
       email: user.email.value,
       emailVerified: true,
@@ -25,7 +25,7 @@ export class AuthRepository {
     });
   }
 
-  async login(email: Email, password: Password): Promise<IdToken> {
+  async getIdToken(email: Email, password: Password): Promise<IdToken> {
     const response = await this.firebaseApi.signInWithEmailAndPassword(
       email.value,
       password.value
