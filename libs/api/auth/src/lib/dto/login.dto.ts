@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class RegisterRequestBody {
+export class LoginDto {
   @IsNotEmpty()
   @IsEmail()
   email!: string;
@@ -8,12 +8,4 @@ export class RegisterRequestBody {
   @IsNotEmpty()
   @IsString()
   password!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  firstName!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  lastName!: string;
 }

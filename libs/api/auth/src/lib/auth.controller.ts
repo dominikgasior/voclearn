@@ -6,8 +6,6 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { RegisterRequestBody } from './request-bodies/register.request-body';
-import { LoginRequestBody } from './request-bodies/login.request-body';
 import { Response } from 'express';
 import {
   idTokenCookieKey,
@@ -18,6 +16,8 @@ import { IdToken } from './dto/id-token';
 import { Email } from './dto/email';
 import { FullName } from './dto/full-name';
 import { Password } from './dto/password';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('/auth')
 export class AuthController {
@@ -25,7 +25,7 @@ export class AuthController {
 
   @Post('/register')
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() requestBody: RegisterRequestBody): Promise<void> {
+  async register(@Body() requestBody: RegisterDto): Promise<void> {
     return this.authService.register(
       new Email(requestBody.email),
       new FullName(requestBody.firstName, requestBody.lastName),
@@ -36,7 +36,7 @@ export class AuthController {
   @Post('/login')
   @HttpCode(HttpStatus.NO_CONTENT)
   async login(
-    @Body() requestBody: LoginRequestBody,
+    @Body() requestBody: LoginDto,
     @Res({ passthrough: true }) response: Response
   ): Promise<void> {
     const idToken = await this.authService.login(

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
 
 export class CreateWordDto {
   @IsNotEmpty()
@@ -9,7 +9,16 @@ export class CreateWordDto {
   @IsString()
   value!: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsUUID()
   wordGroupId!: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  associationId!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  associationNote!: string;
 }
