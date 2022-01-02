@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WordGroupService } from '../word-group/word-group.service';
 import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { AssociationEntity } from '../association/association.entity';
 
 @Injectable()
 export class WordService {
@@ -21,9 +22,20 @@ export class WordService {
       user
     );
 
-    const word = new WordEntity(dto.id, dto.value, wordGroup, [], user.id);
+    const word = new WordEntity(dto.id, dto.value, wordGroup, user.id);
 
-    await this.repository.save(word);
+    const association = new AssociationEntity(
+      dto.associationId,
+      dto.associationNote,
+      word
+    );
+
+    word.association = association;
+
+    await this.repository.manager.transaction(async (entityManager) => {
+      await entityManager.save(association);
+      await entityManager.save(word);
+    });
   }
 
   async findOne(id: string, user: AuthenticatedUser): Promise<WordEntity> {

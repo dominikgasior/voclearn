@@ -1,8 +1,9 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { WordGroupEntity } from '../word-group/word-group.entity';
@@ -21,8 +22,11 @@ export class WordEntity {
   })
   wordGroup: WordGroupEntity;
 
-  @OneToMany(() => AssociationEntity, (association) => association.word)
-  associations: AssociationEntity[];
+  @OneToOne(() => AssociationEntity, (association) => association.word, {
+    nullable: true,
+  })
+  @JoinColumn()
+  association?: AssociationEntity;
 
   @Column()
   userId: string;
@@ -31,13 +35,11 @@ export class WordEntity {
     id: string,
     value: string,
     wordGroup: WordGroupEntity,
-    associations: AssociationEntity[],
     userId: string
   ) {
     this.id = id;
     this.value = value;
     this.wordGroup = wordGroup;
-    this.associations = associations;
     this.userId = userId;
   }
 }

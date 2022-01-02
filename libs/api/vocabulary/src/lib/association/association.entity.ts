@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { WordEntity } from '../word/word.entity';
 
 @Entity('associations')
@@ -9,16 +9,12 @@ export class AssociationEntity {
   @Column({ length: 255 })
   note: string;
 
-  @ManyToOne(() => WordEntity, (word) => word.associations, { nullable: false })
+  @OneToOne(() => WordEntity, (word) => word.association)
   word: WordEntity;
 
-  @Column()
-  userId: string;
-
-  constructor(id: string, note: string, word: WordEntity, userId: string) {
+  constructor(id: string, note: string, word: WordEntity) {
     this.id = id;
     this.note = note;
     this.word = word;
-    this.userId = userId;
   }
 }
