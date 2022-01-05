@@ -1,17 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWordGroupDto } from './dto/create-word-group.dto';
 import { UpdateWordGroupDto } from './dto/update-word-group.dto';
-import { Repository } from 'typeorm';
 import { WordGroupEntity } from './word-group.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { WordGroupRepository } from './word-group.repository';
 
 @Injectable()
 export class WordGroupService {
-  constructor(
-    @InjectRepository(WordGroupEntity)
-    private readonly repository: Repository<WordGroupEntity>
-  ) {}
+  constructor(private readonly repository: WordGroupRepository) {}
 
   async create(
     dto: CreateWordGroupDto,
@@ -46,6 +42,14 @@ export class WordGroupService {
 
   async remove(id: string, user: AuthenticatedUser): Promise<void> {
     const wordGroup = await this.findOne(id, user);
+
+    const numberOfWordsInWordGroup = await this.repository.countWords(
+      wordGroup.id
+    );
+
+    if (numberOfWordsInWordGroup > 0) {
+      throw new Error('Word group must be empty to be removed');
+    }
 
     await this.repository.remove(wordGroup);
   }

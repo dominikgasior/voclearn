@@ -8,8 +8,8 @@ import { ApiAuthModule } from '@voclearn/api/auth';
   imports: [
     AppConfigModule,
     AppDatabaseModule,
-    ApiVocabularyModule,
     ApiAuthModule,
+    ApiVocabularyModule,
   ],
 })
 export class AppModule {}

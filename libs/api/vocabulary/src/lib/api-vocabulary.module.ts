@@ -10,10 +10,16 @@ import { WordGroupEntity } from './word-group/word-group.entity';
 import { AssociationController } from './association/association.controller';
 import { AssociationService } from './association/association.service';
 import { AssociationEntity } from './association/association.entity';
+import { WordGroupRepository } from './word-group/word-group.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([WordEntity, WordGroupEntity, AssociationEntity]),
+    TypeOrmModule.forFeature([
+      WordEntity,
+      WordGroupEntity,
+      WordGroupRepository,
+      AssociationEntity,
+    ]),
     ApiSharedRestApiModule,
   ],
   controllers: [WordController, WordGroupController, AssociationController],
