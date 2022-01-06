@@ -10,7 +10,7 @@ export const AuthUser = createParamDecorator(
 
     if (authUser === undefined) {
       throw new Error(
-        'Request does not have authUser property. Use AuthGuard to validate the request first.'
+        'Request does not have authUser property. AuthMiddleware might not have been set up.'
       );
     }
 

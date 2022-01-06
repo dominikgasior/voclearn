@@ -6,19 +6,17 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
 import { WordService } from './word.service';
 import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
-import { AuthGuard, AuthUser } from '@voclearn/api/shared/rest-api';
+import { AuthUser } from '@voclearn/api/shared/rest-api';
 import { AuthenticatedUser } from '@voclearn/api/shared/domain';
 import { WordEntity } from './word.entity';
 
 @Controller('word')
-@UseGuards(AuthGuard)
 export class WordController {
   constructor(private readonly service: WordService) {}
 

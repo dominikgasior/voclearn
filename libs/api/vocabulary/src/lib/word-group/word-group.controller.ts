@@ -6,19 +6,17 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
 import { WordGroupService } from './word-group.service';
 import { CreateWordGroupDto } from './dto/create-word-group.dto';
 import { UpdateWordGroupDto } from './dto/update-word-group.dto';
-import { AuthGuard, AuthUser } from '@voclearn/api/shared/rest-api';
+import { AuthUser } from '@voclearn/api/shared/rest-api';
 import { WordGroupEntity } from './word-group.entity';
 import { AuthenticatedUser } from '@voclearn/api/shared/domain';
 
 @Controller('word-group')
-@UseGuards(AuthGuard)
 export class WordGroupController {
   constructor(private readonly service: WordGroupService) {}
 
