@@ -4,7 +4,7 @@ import { FullName } from './dto/full-name';
 import { Password } from './dto/password';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { IdToken } from './dto/id-token';
+import { AuthenticatedUser } from './dto/authenticated-user';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
     await this.userRepository.add(new User(email, fullName), password);
   }
 
-  async login(email: Email, password: Password): Promise<IdToken> {
-    return this.userRepository.getIdToken(email, password);
+  async login(email: Email, password: Password): Promise<AuthenticatedUser> {
+    return this.userRepository.authenticate({ email, password });
   }
 }

@@ -5,8 +5,9 @@ import {
 import { Injectable } from '@nestjs/common';
 import { User } from './dto/user';
 import { Password } from './dto/password';
-import { Email } from './dto/email';
-import { IdToken } from './dto/id-token';
+import { Credentials } from './dto/credentials';
+import { AuthenticatedUser } from './dto/authenticated-user';
+import { Token } from './dto/token';
 
 @Injectable()
 export class UserRepository {
@@ -25,12 +26,15 @@ export class UserRepository {
     });
   }
 
-  async getIdToken(email: Email, password: Password): Promise<IdToken> {
+  async authenticate(credentials: Credentials): Promise<AuthenticatedUser> {
     const response = await this.firebaseApi.signInWithEmailAndPassword(
-      email.value,
-      password.value
+      credentials.email.value,
+      credentials.password.value
     );
 
-    return new IdToken(response.idToken);
+    return {
+      idToken: new Token(response.idToken),
+      refreshToken: response.refreshToken,
+    };
   }
 }

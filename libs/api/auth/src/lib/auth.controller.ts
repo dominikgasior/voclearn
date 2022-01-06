@@ -8,11 +8,12 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
+  attachAuthCookiesToResponse,
   idTokenCookieKey,
   isAuthenticatedCookieKey,
+  refreshTokenCookieKey,
 } from '@voclearn/api/shared/rest-api';
 import { AuthService } from './auth.service';
-import { IdToken } from './dto/id-token';
 import { Email } from './dto/email';
 import { FullName } from './dto/full-name';
 import { Password } from './dto/password';
@@ -39,24 +40,18 @@ export class AuthController {
     @Body() requestBody: LoginDto,
     @Res({ passthrough: true }) response: Response
   ): Promise<void> {
-    const idToken = await this.authService.login(
+    const authenticatedUser = await this.authService.login(
       new Email(requestBody.email),
       new Password(requestBody.password)
     );
 
-    AuthController.addAuthCookieToResponse(response, idToken);
-  }
-
-  private static addAuthCookieToResponse(
-    response: Response,
-    idToken: IdToken
-  ): void {
-    response.cookie(idTokenCookieKey, idToken.value, {
-      httpOnly: true,
-    });
-
-    response.cookie(isAuthenticatedCookieKey, 1, {
-      sameSite: 'lax',
-    });
+    attachAuthCookiesToResponse(
+      {
+        [idTokenCookieKey]: authenticatedUser.idToken.value,
+        [refreshTokenCookieKey]: authenticatedUser.refreshToken,
+        [isAuthenticatedCookieKey]: '1',
+      },
+      response
+    );
   }
 }

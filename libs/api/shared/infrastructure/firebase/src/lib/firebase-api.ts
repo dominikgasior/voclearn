@@ -15,6 +15,16 @@ interface SignInFirebaseResponse {
   expiresIn: string;
 }
 
+interface RefreshTokenResponse {
+  access_token: string;
+  expires_in: string;
+  token_type: string;
+  refresh_token: string;
+  id_token: string;
+  user_id: string;
+  project_id: string;
+}
+
 @Injectable()
 export class FirebaseApi {
   constructor(
@@ -33,6 +43,20 @@ export class FirebaseApi {
           email,
           password,
           returnSecureToken: true,
+        }
+      )
+      .pipe(pluck('data'));
+
+    return firstValueFrom(response);
+  }
+
+  refreshToken(refreshToken: string): Promise<RefreshTokenResponse> {
+    const response = this.httpService
+      .post<RefreshTokenResponse>(
+        `https://securetoken.googleapis.com/v1/token?key=${this.config.getKey()}`,
+        {
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken,
         }
       )
       .pipe(pluck('data'));
