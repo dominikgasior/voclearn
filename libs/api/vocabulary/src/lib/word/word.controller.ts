@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
   Patch,
@@ -14,7 +13,6 @@ import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { AuthUser } from '@voclearn/api/shared/rest-api';
 import { AuthenticatedUser } from '@voclearn/api/shared/domain';
-import { WordEntity } from './word.entity';
 
 @Controller('word')
 export class WordController {
@@ -27,15 +25,6 @@ export class WordController {
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
     return this.service.create(dto, user);
-  }
-
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  findOne(
-    @Param('id') id: string,
-    @AuthUser() user: AuthenticatedUser
-  ): Promise<WordEntity> {
-    return this.service.findOne(id, user);
   }
 
   @Patch(':id')

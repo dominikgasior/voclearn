@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   Body,
   Patch,
   Param,
@@ -11,20 +10,10 @@ import { AssociationService } from './association.service';
 import { UpdateAssociationDto } from './dto/update-association.dto';
 import { AuthUser } from '@voclearn/api/shared/rest-api';
 import { AuthenticatedUser } from '@voclearn/api/shared/domain';
-import { AssociationEntity } from './association.entity';
 
 @Controller('association')
 export class AssociationController {
   constructor(private readonly service: AssociationService) {}
-
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  findOne(
-    @Param('id') id: string,
-    @AuthUser() user: AuthenticatedUser
-  ): Promise<AssociationEntity> {
-    return this.service.findOne(id, user);
-  }
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)

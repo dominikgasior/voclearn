@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
   Patch,
@@ -13,7 +12,6 @@ import { WordGroupService } from './word-group.service';
 import { CreateWordGroupDto } from './dto/create-word-group.dto';
 import { UpdateWordGroupDto } from './dto/update-word-group.dto';
 import { AuthUser } from '@voclearn/api/shared/rest-api';
-import { WordGroupEntity } from './word-group.entity';
 import { AuthenticatedUser } from '@voclearn/api/shared/domain';
 
 @Controller('word-group')
@@ -27,15 +25,6 @@ export class WordGroupController {
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
     return this.service.create(dto, user);
-  }
-
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  findOne(
-    @Param('id') id: string,
-    @AuthUser() user: AuthenticatedUser
-  ): Promise<WordGroupEntity> {
-    return this.service.findOne(id, user);
   }
 
   @Patch(':id')
