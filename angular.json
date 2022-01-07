@@ -76,6 +76,29 @@
       },
       "tags": ["scope:presentation"]
     },
+    "api-quiz": {
+      "root": "libs/api/quiz",
+      "sourceRoot": "libs/api/quiz/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/quiz/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/quiz"],
+          "options": {
+            "jestConfig": "libs/api/quiz/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:presentation"]
+    },
     "api-shared-domain": {
       "root": "libs/api/shared/domain",
       "sourceRoot": "libs/api/shared/domain/src",

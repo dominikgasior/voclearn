@@ -13,7 +13,7 @@ import {
 } from './auth.cookies';
 
 @Injectable()
-export class RefreshTokenMiddleware implements NestMiddleware {
+export class RefreshTokenAuthMiddleware implements NestMiddleware {
   constructor(
     private readonly tokenDecoder: JwtTokenDecoder,
     private readonly firebaseApi: FirebaseApi

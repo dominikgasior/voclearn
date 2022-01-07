@@ -21,6 +21,7 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@voclearn/api/auth": ["libs/api/auth/src/index.ts"],
+      "@voclearn/api/quiz": ["libs/api/quiz/src/index.ts"],
       "@voclearn/api/shared/domain": ["libs/api/shared/domain/src/index.ts"],
       "@voclearn/api/shared/infrastructure/firebase": [
         "libs/api/shared/infrastructure/firebase/src/index.ts"

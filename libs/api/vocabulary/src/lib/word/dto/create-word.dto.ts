@@ -7,6 +7,7 @@ export class CreateWordDto {
 
   @IsNotEmpty()
   @IsString()
+  @MaxLength(255)
   value!: string;
 
   @IsNotEmpty()

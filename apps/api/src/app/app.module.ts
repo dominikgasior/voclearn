@@ -3,6 +3,7 @@ import { ApiVocabularyModule } from '@voclearn/api/vocabulary';
 import { AppConfigModule } from './config/app-config.module';
 import { AppDatabaseModule } from './database/app-database.module';
 import { ApiAuthModule } from '@voclearn/api/auth';
+import { ApiQuizModule } from '@voclearn/api/quiz';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ApiAuthModule } from '@voclearn/api/auth';
     AppDatabaseModule,
     ApiAuthModule,
     ApiVocabularyModule,
+    ApiQuizModule,
   ],
 })
 export class AppModule {}

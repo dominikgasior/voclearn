@@ -6,7 +6,7 @@ import { WordEntity } from './word/word.entity';
 import {
   ApiSharedRestApiModule,
   AuthMiddleware,
-  RefreshTokenMiddleware,
+  RefreshTokenAuthMiddleware,
 } from '@voclearn/api/shared/rest-api';
 import { WordGroupController } from './word-group/word-group.controller';
 import { WordGroupService } from './word-group/word-group.service';
@@ -32,7 +32,7 @@ import { WordGroupRepository } from './word-group/word-group.repository';
 export class ApiVocabularyModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer
-      .apply(RefreshTokenMiddleware, AuthMiddleware)
+      .apply(RefreshTokenAuthMiddleware, AuthMiddleware)
       .forRoutes(WordController, WordGroupController, AssociationController);
   }
 }
