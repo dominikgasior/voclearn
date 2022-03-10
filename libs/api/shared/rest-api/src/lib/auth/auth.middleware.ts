@@ -27,7 +27,11 @@ export class AuthMiddleware implements NestMiddleware {
     response: Response,
     next: NextFunction
   ): Promise<void> {
-    assertAllAuthCookiesAreDefinedInRequest(request, this.constructor.name);
+    try {
+      assertAllAuthCookiesAreDefinedInRequest(request, this.constructor.name);
+    } catch (e) {
+      throw new UnauthorizedException((<Error>e).message);
+    }
 
     const idToken = request.cookies[idTokenCookieKey];
 

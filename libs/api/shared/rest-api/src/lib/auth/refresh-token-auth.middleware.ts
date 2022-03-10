@@ -1,7 +1,13 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import {
+  Injectable,
+  NestMiddleware,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { JwtTokenDecoder } from '@voclearn/api/shared/infrastructure/jwt';
-import { FirebaseApi } from '@voclearn/api/shared/infrastructure/firebase';
+import {
+  JwtTokenDecoder,
+  JwtTokenRefresher,
+} from '@voclearn/api/shared/infrastructure/jwt';
 import {
   assertAllAuthCookiesAreDefinedInRequest,
   attachAuthCookiesToResponse,
@@ -16,7 +22,7 @@ import {
 export class RefreshTokenAuthMiddleware implements NestMiddleware {
   constructor(
     private readonly tokenDecoder: JwtTokenDecoder,
-    private readonly firebaseApi: FirebaseApi
+    private readonly tokenRefresher: JwtTokenRefresher
   ) {}
 
   async use(
@@ -24,7 +30,11 @@ export class RefreshTokenAuthMiddleware implements NestMiddleware {
     response: Response,
     next: NextFunction
   ): Promise<void> {
-    assertAllAuthCookiesAreDefinedInRequest(request, this.constructor.name);
+    try {
+      assertAllAuthCookiesAreDefinedInRequest(request, this.constructor.name);
+    } catch (e) {
+      throw new UnauthorizedException((<Error>e).message);
+    }
 
     const idToken = request.cookies[idTokenCookieKey];
 
@@ -35,13 +45,11 @@ export class RefreshTokenAuthMiddleware implements NestMiddleware {
     if (decodedIdToken.exp < now) {
       const refreshToken = request.cookies[refreshTokenCookieKey];
 
-      const refreshTokenResponse = await this.firebaseApi.refreshToken(
-        refreshToken
-      );
+      const refreshedTokens = await this.tokenRefresher.refresh(refreshToken);
 
       const newAuthCookies: AuthCookies = {
-        [idTokenCookieKey]: refreshTokenResponse.id_token,
-        [refreshTokenCookieKey]: refreshTokenResponse.refresh_token,
+        [idTokenCookieKey]: refreshedTokens.idToken,
+        [refreshTokenCookieKey]: refreshedTokens.refreshToken,
         [isAuthenticatedCookieKey]: '1',
       };
 

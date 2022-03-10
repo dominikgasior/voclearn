@@ -1,5 +1,4 @@
 import { ensure, isDefined } from 'tiny-types';
-import { UnauthorizedException } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 export const idTokenCookieKey = 'idToken';
@@ -27,7 +26,7 @@ export const assertAllAuthCookiesAreDefinedInRequest = (
     ensure(context, idTokenCookie, isDefined());
     ensure(context, refreshTokenCookie, isDefined());
   } catch (e) {
-    throw new UnauthorizedException('Valid auth cookies not provided');
+    throw new Error('Valid auth cookies not provided');
   }
 };
 

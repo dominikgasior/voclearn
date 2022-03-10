@@ -1,12 +1,12 @@
-import {
-  FirebaseAdmin,
-  FirebaseApi,
-} from '@voclearn/api/shared/infrastructure/firebase';
 import { Injectable } from '@nestjs/common';
 import { User } from './dto/user';
 import { Password } from './dto/password';
 import { Credentials } from './dto/credentials';
 import { AuthenticatedUser } from './dto/authenticated-user';
+import {
+  FirebaseAdmin,
+  FirebaseApi,
+} from '@voclearn/api/shared/infrastructure/firebase';
 import { Token } from './dto/token';
 
 @Injectable()

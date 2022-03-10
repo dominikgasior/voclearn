@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { pluck } from 'rxjs/operators';
-import { FirebaseConfigService } from './config/firebase-config.service';
 import { firstValueFrom } from 'rxjs';
+import { FirebaseConfig } from './config/firebase.config';
+import { InjectConfig } from '@voclearn/api/shared/infrastructure/config';
+import { FirebaseConfigProvider } from './config/firebase.config-provider';
 
 interface SignInFirebaseResponse {
   kind: string;
@@ -29,7 +31,8 @@ interface RefreshTokenResponse {
 export class FirebaseApi {
   constructor(
     private readonly httpService: HttpService,
-    private readonly config: FirebaseConfigService
+    @InjectConfig(FirebaseConfigProvider)
+    private readonly config: FirebaseConfig
   ) {}
 
   signInWithEmailAndPassword(
@@ -38,7 +41,7 @@ export class FirebaseApi {
   ): Promise<SignInFirebaseResponse> {
     const response = this.httpService
       .post<SignInFirebaseResponse>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.config.getKey()}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.config.key}`,
         {
           email,
           password,
@@ -53,7 +56,7 @@ export class FirebaseApi {
   refreshToken(refreshToken: string): Promise<RefreshTokenResponse> {
     const response = this.httpService
       .post<RefreshTokenResponse>(
-        `https://securetoken.googleapis.com/v1/token?key=${this.config.getKey()}`,
+        `https://securetoken.googleapis.com/v1/token?key=${this.config.key}`,
         {
           grant_type: 'refresh_token',
           refresh_token: refreshToken,

@@ -15,9 +15,11 @@ import { AssociationController } from './association/association.controller';
 import { AssociationService } from './association/association.service';
 import { AssociationEntity } from './association/association.entity';
 import { WordGroupRepository } from './word-group/word-group.repository';
+import { ApiSharedInfrastructureDatabaseModule } from '@voclearn/api/shared/infrastructure/database';
 
 @Module({
   imports: [
+    ApiSharedInfrastructureDatabaseModule,
     TypeOrmModule.forFeature([
       WordEntity,
       WordGroupEntity,

@@ -23,6 +23,12 @@
       "@voclearn/api/auth": ["libs/api/auth/src/index.ts"],
       "@voclearn/api/quiz": ["libs/api/quiz/src/index.ts"],
       "@voclearn/api/shared/domain": ["libs/api/shared/domain/src/index.ts"],
+      "@voclearn/api/shared/infrastructure/config": [
+        "libs/api/shared/infrastructure/config/src/index.ts"
+      ],
+      "@voclearn/api/shared/infrastructure/database": [
+        "libs/api/shared/infrastructure/database/src/index.ts"
+      ],
       "@voclearn/api/shared/infrastructure/firebase": [
         "libs/api/shared/infrastructure/firebase/src/index.ts"
       ],
