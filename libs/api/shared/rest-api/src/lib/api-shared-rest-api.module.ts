@@ -7,8 +7,6 @@ import { ApiSharedInfrastructureFirebaseModule } from '@voclearn/api/shared/infr
     ApiSharedInfrastructureJwtModule,
     ApiSharedInfrastructureFirebaseModule,
   ],
-  controllers: [],
-  providers: [],
   exports: [
     ApiSharedInfrastructureJwtModule,
     ApiSharedInfrastructureFirebaseModule,

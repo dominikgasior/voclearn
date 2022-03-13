@@ -1,8 +1,18 @@
 import { QuestionDto } from './question.dto';
-import { ArrayMinSize, IsArray, ValidateNested } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsNotEmpty,
+  IsUUID,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateQuizDto {
+  @IsNotEmpty()
+  @IsUUID()
+  id!: string;
+
   @IsArray()
   @ArrayMinSize(1)
   @ValidateNested({ each: true })

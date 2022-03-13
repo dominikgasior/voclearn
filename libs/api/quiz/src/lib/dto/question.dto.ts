@@ -1,6 +1,10 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
 
 export class QuestionDto {
+  @IsNotEmpty()
+  @IsUUID()
+  id!: string;
+
   @IsNotEmpty()
   @IsString()
   @MaxLength(255)

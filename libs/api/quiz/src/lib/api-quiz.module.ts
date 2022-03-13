@@ -6,9 +6,17 @@ import {
 } from '@voclearn/api/shared/rest-api';
 import { QuizController } from './quiz.controller';
 import { QuizService } from './quiz.service';
+import { ApiSharedInfrastructureDatabaseModule } from '@voclearn/api/shared/infrastructure/database';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { QuizEntity } from './quiz.entity';
+import { QuestionEntity } from './question.entity';
 
 @Module({
-  imports: [ApiSharedRestApiModule],
+  imports: [
+    ApiSharedRestApiModule,
+    ApiSharedInfrastructureDatabaseModule,
+    TypeOrmModule.forFeature([QuizEntity, QuestionEntity]),
+  ],
   providers: [QuizService],
   controllers: [QuizController],
 })

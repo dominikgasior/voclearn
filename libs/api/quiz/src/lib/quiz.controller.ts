@@ -9,7 +9,7 @@ export class QuizController {
   constructor(private readonly service: QuizService) {}
 
   @Post()
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.CREATED)
   create(
     @Body() dto: CreateQuizDto,
     @AuthUser() user: AuthenticatedUser
