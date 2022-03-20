@@ -31,6 +31,7 @@
       "@voclearn/api/revision/infrastructure": [
         "libs/api/revision/infrastructure/src/index.ts"
       ],
+      "@voclearn/api/revision/shell": ["libs/api/revision/shell/src/index.ts"],
       "@voclearn/api/shared/domain": ["libs/api/shared/domain/src/index.ts"],
       "@voclearn/api/shared/infrastructure/config": [
         "libs/api/shared/infrastructure/config/src/index.ts"

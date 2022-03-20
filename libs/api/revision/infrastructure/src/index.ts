@@ -1,1 +1,1 @@
-export * from './lib/api-revision.module';
+export * from './lib/api-revision-infrastructure.module';

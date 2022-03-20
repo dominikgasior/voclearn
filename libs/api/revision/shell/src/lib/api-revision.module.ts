@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ApiRevisionApplicationModule } from '@voclearn/api/revision/application';
-import { ApiRevisionInfrastructureModule } from './api-revision-infrastructure.module';
+import { ApiRevisionInfrastructureModule } from '@voclearn/api/revision/infrastructure';
 
 @Module({
   imports: [
