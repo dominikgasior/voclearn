@@ -1,3 +1,5 @@
+import { UserId } from './user-id';
+
 export interface AuthenticatedUser {
-  id: string;
+  id: UserId;
 }

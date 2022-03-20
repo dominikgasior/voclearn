@@ -1,13 +1,13 @@
 {
-  "version": 1,
+  "version": 2,
   "projects": {
     "api": {
       "root": "apps/api",
       "sourceRoot": "apps/api/src",
       "projectType": "application",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "executor": "@nrwl/node:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api",
@@ -30,20 +30,20 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:node",
+          "executor": "@nrwl/node:node",
           "options": {
             "buildTarget": "api:build"
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["apps/api/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/api"],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
@@ -57,16 +57,16 @@
       "root": "libs/api/auth",
       "sourceRoot": "libs/api/auth/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["libs/api/auth/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/auth"],
           "options": {
             "jestConfig": "libs/api/auth/jest.config.js",
@@ -80,16 +80,16 @@
       "root": "libs/api/quiz",
       "sourceRoot": "libs/api/quiz/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["libs/api/quiz/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/quiz"],
           "options": {
             "jestConfig": "libs/api/quiz/jest.config.js",
@@ -99,20 +99,45 @@
       },
       "tags": ["scope:presentation"]
     },
+    "api-revision-application": "libs/api/revision/application",
+    "api-revision-domain": {
+      "root": "libs/api/revision/domain",
+      "sourceRoot": "libs/api/revision/domain/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/revision/domain/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/revision/domain"],
+          "options": {
+            "jestConfig": "libs/api/revision/domain/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["scope:domain"]
+    },
+    "api-revision-infrastructure": "libs/api/revision/infrastructure",
     "api-shared-domain": {
       "root": "libs/api/shared/domain",
       "sourceRoot": "libs/api/shared/domain/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["libs/api/shared/domain/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/shared/domain"],
           "options": {
             "jestConfig": "libs/api/shared/domain/jest.config.js",
@@ -126,9 +151,9 @@
       "root": "libs/api/shared/infrastructure/config",
       "sourceRoot": "libs/api/shared/infrastructure/config/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": [
@@ -137,7 +162,7 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/shared/infrastructure/config"],
           "options": {
             "jestConfig": "libs/api/shared/infrastructure/config/jest.config.js",
@@ -151,9 +176,9 @@
       "root": "libs/api/shared/infrastructure/database",
       "sourceRoot": "libs/api/shared/infrastructure/database/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": [
@@ -162,7 +187,7 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/shared/infrastructure/database"],
           "options": {
             "jestConfig": "libs/api/shared/infrastructure/database/jest.config.js",
@@ -176,9 +201,9 @@
       "root": "libs/api/shared/infrastructure/firebase",
       "sourceRoot": "libs/api/shared/infrastructure/firebase/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": [
@@ -187,7 +212,7 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/shared/infrastructure/firebase"],
           "options": {
             "jestConfig": "libs/api/shared/infrastructure/firebase/jest.config.js",
@@ -201,16 +226,16 @@
       "root": "libs/api/shared/infrastructure/jwt",
       "sourceRoot": "libs/api/shared/infrastructure/jwt/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["libs/api/shared/infrastructure/jwt/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/shared/infrastructure/jwt"],
           "options": {
             "jestConfig": "libs/api/shared/infrastructure/jwt/jest.config.js",
@@ -224,16 +249,16 @@
       "root": "libs/api/shared/rest-api",
       "sourceRoot": "libs/api/shared/rest-api/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["libs/api/shared/rest-api/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/shared/rest-api"],
           "options": {
             "jestConfig": "libs/api/shared/rest-api/jest.config.js",
@@ -247,16 +272,16 @@
       "root": "libs/api/vocabulary",
       "sourceRoot": "libs/api/vocabulary/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["libs/api/vocabulary/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api/vocabulary"],
           "options": {
             "jestConfig": "libs/api/vocabulary/jest.config.js",
@@ -271,9 +296,9 @@
       "root": "apps/voclearn",
       "sourceRoot": "apps/voclearn/src",
       "prefix": "voclearn",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "executor": "@angular-devkit/build-angular:browser",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/voclearn",
@@ -323,7 +348,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "executor": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
               "browserTarget": "voclearn:build:production"
@@ -338,13 +363,13 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "executor": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "voclearn:build"
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "apps/voclearn/src/**/*.ts",
@@ -353,7 +378,7 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/voclearn"],
           "options": {
             "jestConfig": "apps/voclearn/jest.config.js",
@@ -367,9 +392,9 @@
       "root": "apps/voclearn-e2e",
       "sourceRoot": "apps/voclearn-e2e/src",
       "projectType": "application",
-      "architect": {
+      "targets": {
         "e2e": {
-          "builder": "@nrwl/cypress:cypress",
+          "executor": "@nrwl/cypress:cypress",
           "options": {
             "cypressConfig": "apps/voclearn-e2e/cypress.json",
             "devServerTarget": "voclearn:serve:development",
@@ -382,7 +407,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["apps/voclearn-e2e/**/*.{js,ts}"]
