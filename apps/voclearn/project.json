@@ -14,10 +14,7 @@
         "polyfills": "apps/voclearn/src/polyfills.ts",
         "tsConfig": "apps/voclearn/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/voclearn/src/favicon.ico",
-          "apps/voclearn/src/assets"
-        ],
+        "assets": ["apps/voclearn/src/favicon.ico", "apps/voclearn/src/assets"],
         "styles": ["apps/voclearn/src/styles.scss"],
         "scripts": []
       },

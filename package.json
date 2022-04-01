@@ -14,7 +14,7 @@
     "format:write:all": "nx format:write --all",
     "lint:all": "nx run-many --target=lint --all --parallel",
     "dep-graph": "nx dep-graph",
-    "typeorm": "ts-node -O '{\"module\": \"commonjs\"}' -P tsconfig.base.json ./node_modules/.bin/typeorm --config libs/api/shared/infrastructure/database/src/lib/config/typeorm-config.ts"
+    "typeorm": "ts-node -O '{\"module\": \"commonjs\"}' -P tsconfig.base.json -r tsconfig-paths/register ./node_modules/.bin/typeorm --config libs/api/shared/infrastructure/database/src/lib/config/typeorm-config.ts"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "@nestjs/common": "^8.4.1",
     "@nestjs/core": "^8.4.1",
     "@nestjs/cqrs": "^8.0.3",
+    "@nestjs/event-emitter": "^1.1.0",
     "@nestjs/mapped-types": "^1.0.1",
     "@nestjs/platform-express": "^8.4.1",
     "@nestjs/typeorm": "^8.0.3",
