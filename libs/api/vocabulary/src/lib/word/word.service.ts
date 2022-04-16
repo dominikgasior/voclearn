@@ -5,15 +5,17 @@ import { WordEntity } from './word.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WordGroupService } from '../word-group/word-group.service';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { AuthenticatedUser, Uuid } from '@voclearn/api/shared/domain';
 import { AssociationEntity } from '../association/association.entity';
+import { RepetitionClient } from '../repetition.client';
 
 @Injectable()
 export class WordService {
   constructor(
     @InjectRepository(WordEntity)
     private readonly repository: Repository<WordEntity>,
-    private readonly wordGroupService: WordGroupService
+    private readonly wordGroupService: WordGroupService,
+    private readonly repetitionClient: RepetitionClient
   ) {}
 
   async create(dto: CreateWordDto, user: AuthenticatedUser): Promise<void> {
@@ -35,6 +37,8 @@ export class WordService {
     await this.repository.manager.transaction(async (entityManager) => {
       await entityManager.save(association);
       await entityManager.save(word);
+
+      await this.repetitionClient.addCard(new Uuid(word.id), user.id);
     });
   }
 

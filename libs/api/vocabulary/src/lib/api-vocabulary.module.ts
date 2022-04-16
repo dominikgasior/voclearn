@@ -16,6 +16,8 @@ import { AssociationService } from './association/association.service';
 import { AssociationEntity } from './association/association.entity';
 import { WordGroupRepository } from './word-group/word-group.repository';
 import { ApiSharedInfrastructureDatabaseModule } from '@voclearn/api/shared/infrastructure/database';
+import { RepetitionClient } from './repetition.client';
+import { ApiRepetitionModule } from '@voclearn/api-repetition-shell';
 
 @Module({
   imports: [
@@ -27,9 +29,15 @@ import { ApiSharedInfrastructureDatabaseModule } from '@voclearn/api/shared/infr
       AssociationEntity,
     ]),
     ApiSharedRestApiModule,
+    ApiRepetitionModule,
+  ],
+  providers: [
+    WordService,
+    WordGroupService,
+    AssociationService,
+    RepetitionClient,
   ],
   controllers: [WordController, WordGroupController, AssociationController],
-  providers: [WordService, WordGroupService, AssociationService],
 })
 export class ApiVocabularyModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {

@@ -4,14 +4,14 @@ import {
   JoinColumn,
   ManyToOne,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import { WordGroupEntity } from '../word-group/word-group.entity';
 import { AssociationEntity } from '../association/association.entity';
 
 @Entity('words')
 export class WordEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   readonly id: string;
 
   @Column({ length: 255 })
@@ -23,10 +23,10 @@ export class WordEntity {
   wordGroup: WordGroupEntity;
 
   @OneToOne(() => AssociationEntity, (association) => association.word, {
-    nullable: true,
+    nullable: false,
   })
   @JoinColumn()
-  association?: AssociationEntity;
+  association!: AssociationEntity;
 
   @Column()
   userId: string;

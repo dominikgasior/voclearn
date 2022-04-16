@@ -1,9 +1,9 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 import { WordEntity } from '../word/word.entity';
 
 @Entity('associations')
 export class AssociationEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   readonly id: string;
 
   @Column({ length: 255 })

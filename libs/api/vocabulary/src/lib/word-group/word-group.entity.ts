@@ -1,9 +1,9 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { WordEntity } from '../word/word.entity';
 
 @Entity('word_groups')
 export class WordGroupEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   readonly id: string;
 
   @Column({ length: 255 })
