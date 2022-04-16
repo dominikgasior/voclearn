@@ -13,11 +13,11 @@ export class UpdatePartitionWhenCardReviewedEventHandler {
     event: CardReviewedEvent,
     transaction: Transaction
   ): Promise<void> {
+    console.log('UpdatePartitionWhenCardReviewedEventHandler');
     await this.learnerRepository.removeCardFromPartition(
       event.cardId,
       event.learnerId,
       transaction
     );
-    console.log('UpdatePartitionWhenCardReviewedEventHandler');
   }
 }

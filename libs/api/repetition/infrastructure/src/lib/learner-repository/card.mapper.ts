@@ -21,7 +21,7 @@ export class CardMapper {
       case SessionDeckCard.name: {
         const sessionDeckNumbers = entity.sessionDeckNumbers;
 
-        if (sessionDeckNumbers === undefined) {
+        if (sessionDeckNumbers === null) {
           throw new Error(
             `Session deck numbers cannot be undefined for a card of type ${SessionDeckCard.name}`
           );
@@ -49,6 +49,6 @@ export class CardMapper {
       );
     }
 
-    return new CardEntity(cardId, cardType, learnerEntity);
+    return new CardEntity(cardId, cardType, learnerEntity, null);
   }
 }

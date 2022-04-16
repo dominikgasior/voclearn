@@ -10,11 +10,11 @@ export class UpdatePartitionWhenCardAddedEventHandler {
 
   @OnEvent(CardAddedEvent.name)
   async handle(event: CardAddedEvent, transaction: Transaction): Promise<void> {
+    console.log('UpdatePartitionWhenCardAddedEventHandler');
     await this.learnerRepository.addCardToPartition(
       event.cardId,
       event.learnerId,
       transaction
     );
-    console.log('UpdatePartitionWhenCardAddedEventHandler');
   }
 }

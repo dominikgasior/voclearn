@@ -9,6 +9,10 @@ export class Repetition {
     return this.learner.reviewCardSuccessfully(this.card);
   }
 
+  repeatUnsuccessfully(): Repetition {
+    return this.learner.reviewCardUnsuccessfully(this.card);
+  }
+
   getSnapshot(): RepetitionSnapshot {
     return {
       learner: this.learner,

@@ -14,13 +14,13 @@ export class CardEntity {
   learner: LearnerEntity;
 
   @Column({ type: 'int', array: true, nullable: true })
-  sessionDeckNumbers: number[] | undefined;
+  sessionDeckNumbers: number[] | null;
 
   constructor(
     id: string,
     type: string,
     learner: LearnerEntity,
-    sessionDeckNumbers?: number[]
+    sessionDeckNumbers: number[] | null
   ) {
     this.id = id;
     this.type = type;

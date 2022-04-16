@@ -34,9 +34,15 @@ export class Learner extends AggregateRoot {
   reviewCardSuccessfully(card: Card): Repetition {
     const reviewedCard = card.reviewSuccessfully(this.currentSession);
 
-    this.apply(new CardReviewedEvent(reviewedCard.id, this.id));
+    this.reviewCard(reviewedCard.id);
 
-    this.reviewCard();
+    return new Repetition(this, reviewedCard);
+  }
+
+  reviewCardUnsuccessfully(card: Card): Repetition {
+    const reviewedCard = card.reviewUnsuccessfully(this.currentSession);
+
+    this.reviewCard(reviewedCard.id);
 
     return new Repetition(this, reviewedCard);
   }
@@ -57,8 +63,10 @@ export class Learner extends AggregateRoot {
     };
   }
 
-  private reviewCard(): void {
+  private reviewCard(cardId: CardId): void {
     this.partition = this.partition.decrease();
+
+    this.apply(new CardReviewedEvent(cardId, this.id));
 
     if (this.partition.isEmpty()) {
       this.moveToNextSession();

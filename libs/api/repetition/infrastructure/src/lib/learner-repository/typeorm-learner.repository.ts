@@ -172,7 +172,7 @@ export class TypeormLearnerRepository implements LearnerRepository {
 
     await this.cardRepository(transaction).update(
       { learner: learnerEntity },
-      { type: CurrentDeckCard.name, sessionDeckNumbers: undefined }
+      { type: CurrentDeckCard.name, sessionDeckNumbers: null }
     );
 
     await this.partitionRepository(transaction).delete({
