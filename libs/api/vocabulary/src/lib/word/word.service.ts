@@ -24,7 +24,13 @@ export class WordService {
       user
     );
 
-    const word = new WordEntity(dto.id, dto.value, wordGroup, user.id);
+    const word = new WordEntity(
+      dto.id,
+      dto.value,
+      dto.translation,
+      wordGroup,
+      user.id
+    );
 
     const association = new AssociationEntity(
       dto.associationId,

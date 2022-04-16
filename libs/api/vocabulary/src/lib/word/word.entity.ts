@@ -17,6 +17,9 @@ export class WordEntity {
   @Column({ length: 255 })
   value: string;
 
+  @Column({ length: 255 })
+  translation: string;
+
   @ManyToOne(() => WordGroupEntity, (wordGroup) => wordGroup.words, {
     nullable: false,
   })
@@ -34,11 +37,13 @@ export class WordEntity {
   constructor(
     id: string,
     value: string,
+    translation: string,
     wordGroup: WordGroupEntity,
     userId: string
   ) {
     this.id = id;
     this.value = value;
+    this.translation = translation;
     this.wordGroup = wordGroup;
     this.userId = userId;
   }

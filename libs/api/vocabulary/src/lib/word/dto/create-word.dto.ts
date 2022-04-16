@@ -11,6 +11,11 @@ export class CreateWordDto {
   value!: string;
 
   @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  translation!: string;
+
+  @IsNotEmpty()
   @IsUUID()
   wordGroupId!: string;
 
