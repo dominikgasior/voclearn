@@ -3,47 +3,46 @@ import { UpdateAssociationDto } from './dto/update-association.dto';
 import { Repository } from 'typeorm';
 import { AssociationEntity } from './association.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { UserId, Uuid } from '@voclearn/api/shared/domain';
 
 @Injectable()
 export class AssociationService {
   constructor(
     @InjectRepository(AssociationEntity)
-    private readonly repository: Repository<AssociationEntity>
+    private readonly associationRepository: Repository<AssociationEntity>
   ) {}
 
-  async findOne(
-    id: string,
-    user: AuthenticatedUser
-  ): Promise<AssociationEntity> {
-    const association = await this.repository.findOneOrFail(id);
+  async findOne(id: Uuid, userId: UserId): Promise<AssociationEntity> {
+    const association = await this.associationRepository.findOneOrFail(
+      id.value
+    );
 
-    AssociationService.assertUserIsAuthorized(association, user);
+    AssociationService.assertUserIsAuthorized(association, userId);
 
     return association;
   }
 
   async update(
-    id: string,
+    id: Uuid,
     dto: UpdateAssociationDto,
-    user: AuthenticatedUser
+    userId: UserId
   ): Promise<void> {
-    const association = await this.findOne(id, user);
+    const association = await this.findOne(id, userId);
 
     if (dto.note !== undefined) {
       association.note = dto.note;
     }
 
-    await this.repository.save(association);
+    await this.associationRepository.save(association);
   }
 
   private static assertUserIsAuthorized(
     association: AssociationEntity,
-    user: AuthenticatedUser
+    userId: UserId
   ): void {
-    if (association.word.userId !== user.id) {
+    if (association.word.userId !== userId) {
       throw new Error(
-        `User ${user.id} does not have access to association ${association.id}`
+        `User ${userId} does not have access to association ${association.id}`
       );
     }
   }

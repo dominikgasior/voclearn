@@ -8,6 +8,7 @@ import { FillPartitionWhenLearnerSessionMovedEventHandler } from './event-handle
 import { UpdatePartitionWhenCardReviewedEventHandler } from './event-handlers/update-partition-when-card-reviewed.event-handler';
 import { ResetCardsWhenLearnerResetEventHandler } from './event-handlers/reset-cards-when-learner-reset.event-handler';
 import { RepeatUnsuccessfullyUseCase } from './use-cases/repeat-unsuccessfully.use-case';
+import { GetCardToRepeatUseCase } from './use-cases/get-card-to-repeat.use-case';
 
 @Module({
   imports: [CqrsModule],
@@ -16,6 +17,7 @@ import { RepeatUnsuccessfullyUseCase } from './use-cases/repeat-unsuccessfully.u
     RepeatSuccessfullyUseCase,
     RepeatUnsuccessfullyUseCase,
     AddCardUseCase,
+    GetCardToRepeatUseCase,
     UpdatePartitionWhenCardAddedEventHandler,
     FillPartitionWhenLearnerSessionMovedEventHandler,
     UpdatePartitionWhenCardReviewedEventHandler,

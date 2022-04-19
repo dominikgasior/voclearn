@@ -8,8 +8,12 @@ import { CardMapper } from './learner-repository/card.mapper';
 import { PartitionEntity } from './learner-repository/partition.entity';
 import { ApiSharedInfrastructureTransactionalModule } from '@voclearn/api/shared/infrastructure/transactional';
 import { ApiSharedInfrastructureDomainEventPublisherModule } from '@voclearn/api/shared/infrastructure/domain-event-publisher';
-import { LearnerRepository } from '@voclearn/api-repetition-application';
+import {
+  GetCardToRepeatDataProvider,
+  LearnerRepository,
+} from '@voclearn/api-repetition-application';
 import { TypeormLearnerRepository } from './learner-repository/typeorm-learner.repository';
+import { TypeormGetCardToRepeatDataProvider } from './get-card-to-repeat-data-provider/typeorm-get-card-to-repeat.data-provider';
 
 @Module({
   imports: [
@@ -23,11 +27,16 @@ import { TypeormLearnerRepository } from './learner-repository/typeorm-learner.r
       provide: LearnerRepository,
       useClass: TypeormLearnerRepository,
     },
+    {
+      provide: GetCardToRepeatDataProvider,
+      useClass: TypeormGetCardToRepeatDataProvider,
+    },
     LearnerMapper,
     CardMapper,
   ],
   exports: [
     LearnerRepository,
+    GetCardToRepeatDataProvider,
     ApiSharedInfrastructureTransactionalModule,
     ApiSharedInfrastructureDomainEventPublisherModule,
   ],

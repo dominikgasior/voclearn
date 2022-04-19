@@ -6,18 +6,14 @@ import {
 } from '@voclearn/api/shared/rest-api';
 import { QuizController } from './quiz.controller';
 import { QuizService } from './quiz.service';
-import { ApiSharedInfrastructureDatabaseModule } from '@voclearn/api/shared/infrastructure/database';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { QuizEntity } from './quiz.entity';
-import { QuestionEntity } from './question.entity';
+import { ApiRepetitionModule } from '@voclearn/api-repetition-shell';
+import { RepetitionClient } from './repetition/repetition.client';
+import { VocabularyClient } from './vocabulary/vocabulary.client';
+import { ApiVocabularyModule } from '@voclearn/api/vocabulary';
 
 @Module({
-  imports: [
-    ApiSharedRestApiModule,
-    ApiSharedInfrastructureDatabaseModule,
-    TypeOrmModule.forFeature([QuizEntity, QuestionEntity]),
-  ],
-  providers: [QuizService],
+  imports: [ApiSharedRestApiModule, ApiRepetitionModule, ApiVocabularyModule],
+  providers: [QuizService, RepetitionClient, VocabularyClient],
   controllers: [QuizController],
 })
 export class ApiQuizModule implements NestModule {

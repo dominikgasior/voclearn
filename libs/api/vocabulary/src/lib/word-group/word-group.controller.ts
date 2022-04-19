@@ -11,12 +11,12 @@ import {
 import { WordGroupService } from './word-group.service';
 import { CreateWordGroupDto } from './dto/create-word-group.dto';
 import { UpdateWordGroupDto } from './dto/update-word-group.dto';
-import { AuthUser } from '@voclearn/api/shared/rest-api';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
+import { Uuid } from '@voclearn/api/shared/domain';
 
 @Controller('word-group')
 export class WordGroupController {
-  constructor(private readonly service: WordGroupService) {}
+  constructor(private readonly wordGroupService: WordGroupService) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -24,7 +24,7 @@ export class WordGroupController {
     @Body() dto: CreateWordGroupDto,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.service.create(dto, user);
+    return this.wordGroupService.create(dto, user.id);
   }
 
   @Patch(':id')
@@ -34,7 +34,7 @@ export class WordGroupController {
     @Body() dto: UpdateWordGroupDto,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.service.update(id, dto, user);
+    return this.wordGroupService.update(new Uuid(id), dto, user.id);
   }
 
   @Delete(':id')
@@ -43,6 +43,6 @@ export class WordGroupController {
     @Param('id') id: string,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.service.remove(id, user);
+    return this.wordGroupService.remove(new Uuid(id), user.id);
   }
 }

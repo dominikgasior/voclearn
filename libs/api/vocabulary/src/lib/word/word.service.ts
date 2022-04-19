@@ -5,23 +5,23 @@ import { WordEntity } from './word.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WordGroupService } from '../word-group/word-group.service';
-import { AuthenticatedUser, Uuid } from '@voclearn/api/shared/domain';
+import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { AssociationEntity } from '../association/association.entity';
-import { RepetitionClient } from '../repetition.client';
+import { RepetitionClient } from '../repetition/repetition.client';
 
 @Injectable()
 export class WordService {
   constructor(
     @InjectRepository(WordEntity)
-    private readonly repository: Repository<WordEntity>,
+    private readonly wordRepository: Repository<WordEntity>,
     private readonly wordGroupService: WordGroupService,
     private readonly repetitionClient: RepetitionClient
   ) {}
 
-  async create(dto: CreateWordDto, user: AuthenticatedUser): Promise<void> {
+  async create(dto: CreateWordDto, userId: UserId): Promise<void> {
     const wordGroup = await this.wordGroupService.findOne(
-      dto.wordGroupId,
-      user
+      new Uuid(dto.wordGroupId),
+      userId
     );
 
     const word = new WordEntity(
@@ -29,7 +29,7 @@ export class WordService {
       dto.value,
       dto.translation,
       wordGroup,
-      user.id
+      userId
     );
 
     const association = new AssociationEntity(
@@ -40,56 +40,62 @@ export class WordService {
 
     word.association = association;
 
-    await this.repository.manager.transaction(async (entityManager) => {
+    await this.wordRepository.manager.transaction(async (entityManager) => {
       await entityManager.save(association);
       await entityManager.save(word);
 
-      await this.repetitionClient.addCard(new Uuid(word.id), user.id);
+      await this.repetitionClient.addCard(new Uuid(word.id), userId);
     });
   }
 
-  async findOne(id: string, user: AuthenticatedUser): Promise<WordEntity> {
-    const word = await this.repository.findOneOrFail(id);
+  async findOne(id: Uuid, userId: UserId): Promise<WordEntity> {
+    const word = await this.wordRepository.findOneOrFail(id.value);
 
-    WordService.assertUserIsAuthorized(word, user);
+    WordService.assertUserIsAuthorized(word, userId);
 
     return word;
   }
 
-  async update(
-    id: string,
-    dto: UpdateWordDto,
-    user: AuthenticatedUser
-  ): Promise<void> {
-    const word = await this.findOne(id, user);
+  async update(id: Uuid, dto: UpdateWordDto, userId: UserId): Promise<void> {
+    const word = await this.findOne(id, userId);
 
     if (dto.value !== undefined) {
       word.value = dto.value;
     }
     if (dto.wordGroupId !== undefined) {
       word.wordGroup = await this.wordGroupService.findOne(
-        dto.wordGroupId,
-        user
+        new Uuid(dto.wordGroupId),
+        userId
       );
     }
 
-    await this.repository.save(word);
+    await this.wordRepository.save(word);
   }
 
-  async remove(id: string, user: AuthenticatedUser): Promise<void> {
-    const word = await this.findOne(id, user);
+  async remove(id: Uuid, userId: UserId): Promise<void> {
+    const word = await this.findOne(id, userId);
 
-    await this.repository.remove(word);
+    await this.wordRepository.remove(word);
+  }
+
+  async checkWordTranslation(
+    wordId: Uuid,
+    translation: string,
+    userId: UserId
+  ): Promise<boolean> {
+    const word = await this.findOne(wordId, userId);
+
+    const wordTranslation = word.translation;
+
+    return wordTranslation === translation;
   }
 
   private static assertUserIsAuthorized(
     word: WordEntity,
-    user: AuthenticatedUser
+    userId: UserId
   ): void {
-    if (word.userId !== user.id) {
-      throw new Error(
-        `User ${user.id} does not have access to word ${word.id}`
-      );
+    if (word.userId !== userId) {
+      throw new Error(`User ${userId} does not have access to word ${word.id}`);
     }
   }
 }

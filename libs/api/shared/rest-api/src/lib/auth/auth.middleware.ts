@@ -13,7 +13,7 @@ import {
   assertAllAuthCookiesAreDefinedInRequest,
   idTokenCookieKey,
 } from './auth.cookies';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { AuthenticatedUser } from './authenticated-user';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {

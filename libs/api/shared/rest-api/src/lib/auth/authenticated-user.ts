@@ -1,4 +1,4 @@
-import { UserId } from './user-id';
+import { UserId } from '@voclearn/api/shared/domain';
 
 export interface AuthenticatedUser {
   id: UserId;

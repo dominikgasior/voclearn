@@ -2,48 +2,45 @@ import { Injectable } from '@nestjs/common';
 import { CreateWordGroupDto } from './dto/create-word-group.dto';
 import { UpdateWordGroupDto } from './dto/update-word-group.dto';
 import { WordGroupEntity } from './word-group.entity';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { WordGroupRepository } from './word-group.repository';
 
 @Injectable()
 export class WordGroupService {
-  constructor(private readonly repository: WordGroupRepository) {}
+  constructor(private readonly wordGroupRepository: WordGroupRepository) {}
 
-  async create(
-    dto: CreateWordGroupDto,
-    user: AuthenticatedUser
-  ): Promise<void> {
-    const wordGroup = new WordGroupEntity(dto.id, dto.name, [], user.id);
+  async create(dto: CreateWordGroupDto, userId: UserId): Promise<void> {
+    const wordGroup = new WordGroupEntity(dto.id, dto.name, [], userId);
 
-    await this.repository.save(wordGroup);
+    await this.wordGroupRepository.save(wordGroup);
   }
 
-  async findOne(id: string, user: AuthenticatedUser): Promise<WordGroupEntity> {
-    const wordGroup = await this.repository.findOneOrFail(id);
+  async findOne(id: Uuid, userId: UserId): Promise<WordGroupEntity> {
+    const wordGroup = await this.wordGroupRepository.findOneOrFail(id.value);
 
-    WordGroupService.assertUserIsAuthorized(wordGroup, user);
+    WordGroupService.assertUserIsAuthorized(wordGroup, userId);
 
     return wordGroup;
   }
 
   async update(
-    id: string,
+    id: Uuid,
     dto: UpdateWordGroupDto,
-    user: AuthenticatedUser
+    userId: UserId
   ): Promise<void> {
-    const wordGroup = await this.findOne(id, user);
+    const wordGroup = await this.findOne(id, userId);
 
     if (dto.name !== undefined) {
       wordGroup.name = dto.name;
     }
 
-    await this.repository.save(wordGroup);
+    await this.wordGroupRepository.save(wordGroup);
   }
 
-  async remove(id: string, user: AuthenticatedUser): Promise<void> {
-    const wordGroup = await this.findOne(id, user);
+  async remove(id: Uuid, userId: UserId): Promise<void> {
+    const wordGroup = await this.findOne(id, userId);
 
-    const numberOfWordsInWordGroup = await this.repository.countWords(
+    const numberOfWordsInWordGroup = await this.wordGroupRepository.countWords(
       wordGroup.id
     );
 
@@ -51,16 +48,16 @@ export class WordGroupService {
       throw new Error('Word group must be empty to be removed');
     }
 
-    await this.repository.remove(wordGroup);
+    await this.wordGroupRepository.remove(wordGroup);
   }
 
   private static assertUserIsAuthorized(
     wordGroup: WordGroupEntity,
-    user: AuthenticatedUser
+    userId: UserId
   ): void {
-    if (wordGroup.userId !== user.id) {
+    if (wordGroup.userId !== userId) {
       throw new Error(
-        `User ${user.id} does not have access to word group ${wordGroup.id}`
+        `User ${userId} does not have access to word group ${wordGroup.id}`
       );
     }
   }

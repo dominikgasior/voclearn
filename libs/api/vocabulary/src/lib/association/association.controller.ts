@@ -8,12 +8,12 @@ import {
 } from '@nestjs/common';
 import { AssociationService } from './association.service';
 import { UpdateAssociationDto } from './dto/update-association.dto';
-import { AuthUser } from '@voclearn/api/shared/rest-api';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
+import { Uuid } from '@voclearn/api/shared/domain';
 
 @Controller('association')
 export class AssociationController {
-  constructor(private readonly service: AssociationService) {}
+  constructor(private readonly associationService: AssociationService) {}
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -22,6 +22,6 @@ export class AssociationController {
     @Body() dto: UpdateAssociationDto,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.service.update(id, dto, user);
+    return this.associationService.update(new Uuid(id), dto, user.id);
   }
 }

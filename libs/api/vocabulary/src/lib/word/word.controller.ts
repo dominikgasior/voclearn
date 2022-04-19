@@ -11,12 +11,12 @@ import {
 import { WordService } from './word.service';
 import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
-import { AuthUser } from '@voclearn/api/shared/rest-api';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
+import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
+import { Uuid } from '@voclearn/api/shared/domain';
 
 @Controller('word')
 export class WordController {
-  constructor(private readonly service: WordService) {}
+  constructor(private readonly wordService: WordService) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -24,7 +24,7 @@ export class WordController {
     @Body() dto: CreateWordDto,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.service.create(dto, user);
+    return this.wordService.create(dto, user.id);
   }
 
   @Patch(':id')
@@ -34,7 +34,7 @@ export class WordController {
     @Body() dto: UpdateWordDto,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.service.update(id, dto, user);
+    return this.wordService.update(new Uuid(id), dto, user.id);
   }
 
   @Delete(':id')
@@ -43,6 +43,6 @@ export class WordController {
     @Param('id') id: string,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.service.remove(id, user);
+    return this.wordService.remove(new Uuid(id), user.id);
   }
 }

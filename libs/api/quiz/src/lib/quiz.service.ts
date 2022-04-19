@@ -1,35 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { AuthenticatedUser } from '@voclearn/api/shared/domain';
-import { CreateQuizDto } from './dto/create-quiz.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { QuizEntity } from './quiz.entity';
-import { Repository } from 'typeorm';
-import { QuestionEntity } from './question.entity';
+import { RepetitionClient } from './repetition/repetition.client';
+import { UserId, Uuid } from '@voclearn/api/shared/domain';
+import { Question } from './dto/question';
+import { VocabularyClient } from './vocabulary/vocabulary.client';
+import { AnswerQuestionDto } from './dto/answer-question.dto';
 
 @Injectable()
 export class QuizService {
   constructor(
-    @InjectRepository(QuizEntity)
-    private readonly repository: Repository<QuizEntity>
+    private readonly repetitionClient: RepetitionClient,
+    private readonly vocabularyClient: VocabularyClient
   ) {}
 
-  async create(dto: CreateQuizDto, user: AuthenticatedUser): Promise<void> {
-    const quiz = new QuizEntity(dto.id, [], user.id);
+  async getNextQuestion(userId: UserId): Promise<Question> {
+    const questionId = await this.repetitionClient.getNextQuestionId(userId);
 
-    quiz.questions = this.mapQuestions(dto, quiz);
-
-    await this.repository.save(quiz);
+    return this.vocabularyClient.getQuestion(questionId, userId);
   }
 
-  private mapQuestions(dto: CreateQuizDto, quiz: QuizEntity): QuestionEntity[] {
-    return dto.questions.map(
-      (questionDto) =>
-        new QuestionEntity(
-          questionDto.id,
-          questionDto.question,
-          questionDto.answer,
-          quiz
-        )
+  async answerQuestion(dto: AnswerQuestionDto, userId: UserId): Promise<void> {
+    const questionId = new Uuid(dto.questionId);
+
+    const isAnswerCorrect = await this.vocabularyClient.checkAnswer(
+      questionId,
+      dto.answer,
+      userId
+    );
+
+    if (isAnswerCorrect) {
+      return this.repetitionClient.answerQuestionSuccessfully(
+        questionId,
+        userId
+      );
+    }
+
+    return this.repetitionClient.answerQuestionUnsuccessfully(
+      questionId,
+      userId
     );
   }
 }
