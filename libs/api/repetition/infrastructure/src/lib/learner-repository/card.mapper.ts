@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   Card,
   CurrentDeckCard,
+  LearningSession,
   RetiredDeckCard,
   SessionDeck,
   SessionDeckCard,
@@ -23,14 +24,26 @@ export class CardMapper {
 
         if (sessionDeckNumbers === null) {
           throw new Error(
-            `Session deck numbers cannot be undefined for a card of type ${SessionDeckCard.name}`
+            `Session deck numbers cannot be null for a card of type ${SessionDeckCard.name}`
           );
         }
 
         return new SessionDeckCard(cardId, new SessionDeck(sessionDeckNumbers));
       }
-      case RetiredDeckCard.name:
-        return new RetiredDeckCard(cardId);
+      case RetiredDeckCard.name: {
+        const retiredInSession = entity.retiredInSession;
+
+        if (retiredInSession === null) {
+          throw new Error(
+            `Retired in session cannot be null for a card of type ${RetiredDeckCard.name}`
+          );
+        }
+
+        return new RetiredDeckCard(
+          cardId,
+          new LearningSession(retiredInSession)
+        );
+      }
       default:
         throw new Error(`Unhandled card entity type: ${entity.type}`);
     }
@@ -45,10 +58,21 @@ export class CardMapper {
         cardId,
         cardType,
         learnerEntity,
-        card.getSnapshot().sessionDeck.toNumbers()
+        card.getSnapshot().sessionDeck.toNumbers(),
+        null
       );
     }
 
-    return new CardEntity(cardId, cardType, learnerEntity, null);
+    if (card instanceof RetiredDeckCard) {
+      return new CardEntity(
+        cardId,
+        cardType,
+        learnerEntity,
+        null,
+        card.getSnapshot().retiredInSession.toNumber()
+      );
+    }
+
+    return new CardEntity(cardId, cardType, learnerEntity, null, null);
   }
 }

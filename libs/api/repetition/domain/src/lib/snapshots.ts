@@ -19,3 +19,7 @@ export interface LearnerSnapshot {
 export interface SessionDeckCardSnapshot {
   sessionDeck: SessionDeck;
 }
+
+export interface RetiredDeckCardSnapshot {
+  retiredInSession: LearningSession;
+}

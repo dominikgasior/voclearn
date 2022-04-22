@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { WordEntity } from './word.entity';
@@ -11,6 +11,8 @@ import { RepetitionClient } from '../repetition/repetition.client';
 
 @Injectable()
 export class WordService {
+  private readonly logger = new Logger(WordService.name);
+
   constructor(
     @InjectRepository(WordEntity)
     private readonly wordRepository: Repository<WordEntity>,
@@ -44,8 +46,10 @@ export class WordService {
       await entityManager.save(association);
       await entityManager.save(word);
 
-      await this.repetitionClient.addCard(new Uuid(word.id), userId);
+      await this.repetitionClient.addWord(new Uuid(word.id), userId);
     });
+
+    this.logger.debug(`Word ${dto.id} created by user ${userId}`);
   }
 
   async findOne(id: Uuid, userId: UserId): Promise<WordEntity> {
@@ -70,12 +74,20 @@ export class WordService {
     }
 
     await this.wordRepository.save(word);
+
+    this.logger.debug(`Word ${id.value} updated by user ${userId}`);
   }
 
   async remove(id: Uuid, userId: UserId): Promise<void> {
     const word = await this.findOne(id, userId);
 
-    await this.wordRepository.remove(word);
+    await this.wordRepository.manager.transaction(async (entityManager) => {
+      await entityManager.remove(word);
+
+      await this.repetitionClient.removeWord(id, userId);
+    });
+
+    this.logger.debug(`Word ${id.value} removed by user ${userId}`);
   }
 
   async checkWordTranslation(
@@ -87,7 +99,13 @@ export class WordService {
 
     const wordTranslation = word.translation;
 
-    return wordTranslation === translation;
+    const result = wordTranslation === translation;
+
+    this.logger.debug(
+      `Translation ${translation} for word ${wordId.value} checked by user ${userId}, result = ${result}`
+    );
+
+    return result;
   }
 
   private static assertUserIsAuthorized(

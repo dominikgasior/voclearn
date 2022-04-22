@@ -31,6 +31,14 @@ export class Learner extends AggregateRoot {
     return new Repetition(this, card);
   }
 
+  removeCard(): void {
+    this.partition = this.partition.decrease();
+
+    if (this.partition.isEmpty()) {
+      this.moveToNextSession();
+    }
+  }
+
   reviewCardSuccessfully(card: Card): Repetition {
     const reviewedCard = card.reviewSuccessfully(this.currentSession);
 

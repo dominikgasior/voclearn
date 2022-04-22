@@ -2,12 +2,14 @@ import { User } from './dto/user';
 import { Email } from './dto/email';
 import { FullName } from './dto/full-name';
 import { Password } from './dto/password';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { AuthenticatedUser } from './dto/authenticated-user';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(private readonly userRepository: UserRepository) {}
 
   async register(
@@ -16,9 +18,18 @@ export class AuthService {
     password: Password
   ): Promise<void> {
     await this.userRepository.add(new User(email, fullName), password);
+
+    this.logger.debug(`User ${email.value} registered`);
   }
 
   async login(email: Email, password: Password): Promise<AuthenticatedUser> {
-    return this.userRepository.authenticate({ email, password });
+    const authenticatedUser = await this.userRepository.authenticate({
+      email,
+      password,
+    });
+
+    this.logger.debug(`User ${email.value} logged`);
+
+    return authenticatedUser;
   }
 }

@@ -5,6 +5,7 @@ import { AddCardCommand } from './commands/add-card.command';
 import { RepeatUnsuccessfullyCommand } from './commands/repeat-unsuccessfully.command';
 import { GetCardToRepeatQuery } from './queries/get-card-to-repeat.query';
 import { CardId } from '@voclearn/api-repetition-domain';
+import { RemoveCardCommand } from './commands/remove-card.command';
 
 @Injectable()
 export class RepetitionFacade {
@@ -14,6 +15,10 @@ export class RepetitionFacade {
   ) {}
 
   addCard(command: AddCardCommand): Promise<void> {
+    return this.commandBus.execute(command);
+  }
+
+  removeCard(command: RemoveCardCommand): Promise<void> {
     return this.commandBus.execute(command);
   }
 

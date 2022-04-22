@@ -4,7 +4,6 @@ import {
   LearnerId,
   LearningSession,
   Partition,
-  Repetition,
 } from '@voclearn/api-repetition-domain';
 import { Transaction } from '@voclearn/api/shared/application';
 
@@ -15,17 +14,6 @@ export abstract class LearnerRepository {
   ): Promise<Learner>;
 
   abstract save(learner: Learner, transaction: Transaction): Promise<void>;
-
-  abstract getRepetition(
-    cardId: CardId,
-    learnerId: LearnerId,
-    transaction: Transaction
-  ): Promise<Repetition>;
-
-  abstract saveRepetition(
-    repetition: Repetition,
-    transaction: Transaction
-  ): Promise<void>;
 
   abstract hasCard(cardId: CardId, transaction: Transaction): Promise<boolean>;
 
@@ -45,7 +33,9 @@ export abstract class LearnerRepository {
     cardId: CardId,
     learnerId: LearnerId,
     transaction: Transaction
-  ): Promise<void>;
+  ): Promise<boolean>;
 
   abstract reset(learnerId: LearnerId, transaction: Transaction): Promise<void>;
+
+  abstract removeCard(cardId: CardId, transaction: Transaction): Promise<void>;
 }

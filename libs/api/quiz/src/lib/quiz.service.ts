@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { RepetitionClient } from './repetition/repetition.client';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { Question } from './dto/question';
@@ -7,6 +7,8 @@ import { AnswerQuestionDto } from './dto/answer-question.dto';
 
 @Injectable()
 export class QuizService {
+  private readonly logger = new Logger(QuizService.name);
+
   constructor(
     private readonly repetitionClient: RepetitionClient,
     private readonly vocabularyClient: VocabularyClient
@@ -15,7 +17,14 @@ export class QuizService {
   async getNextQuestion(userId: UserId): Promise<Question> {
     const questionId = await this.repetitionClient.getNextQuestionId(userId);
 
-    return this.vocabularyClient.getQuestion(questionId, userId);
+    const question = await this.vocabularyClient.getQuestion(
+      questionId,
+      userId
+    );
+
+    this.logger.debug(`Question ${question.question} returned`);
+
+    return question;
   }
 
   async answerQuestion(dto: AnswerQuestionDto, userId: UserId): Promise<void> {
@@ -28,15 +37,19 @@ export class QuizService {
     );
 
     if (isAnswerCorrect) {
-      return this.repetitionClient.answerQuestionSuccessfully(
+      await this.repetitionClient.answerQuestionSuccessfully(
         questionId,
         userId
       );
-    }
 
-    return this.repetitionClient.answerQuestionUnsuccessfully(
-      questionId,
-      userId
-    );
+      this.logger.debug(`Question ${dto.questionId} answered successfully`);
+    } else {
+      await this.repetitionClient.answerQuestionUnsuccessfully(
+        questionId,
+        userId
+      );
+
+      this.logger.debug(`Question ${dto.questionId} answered unsuccessfully`);
+    }
   }
 }

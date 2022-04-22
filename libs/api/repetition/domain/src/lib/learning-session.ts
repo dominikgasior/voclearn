@@ -26,6 +26,10 @@ export class LearningSession {
     return new LearningSession(nextSessionNumber);
   }
 
+  equals(session: LearningSession): boolean {
+    return this.sessionNumber === session.toNumber();
+  }
+
   private assertSessionNumberIsInRange(): void {
     if (
       this.sessionNumber < LearningSession.FIRST_SESSION_NUMBER ||

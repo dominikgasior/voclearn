@@ -3,12 +3,17 @@ import { AddCardCommand } from '../boundaries/commands/add-card.command';
 import { CardId } from '@voclearn/api-repetition-domain';
 import { Transaction, Transactional } from '@voclearn/api/shared/application';
 import { LearnerRepository } from '../gateways/learner.repository';
+import { RepetitionRepository } from '../gateways/repetition.repository';
+import { Logger } from '@nestjs/common';
 
 @CommandHandler(AddCardCommand)
 export class AddCardUseCase implements ICommandHandler<AddCardCommand, void> {
+  private readonly logger = new Logger(AddCardUseCase.name);
+
   constructor(
     private readonly transactional: Transactional,
-    private readonly learnerRepository: LearnerRepository
+    private readonly learnerRepository: LearnerRepository,
+    private readonly repetitionRepository: RepetitionRepository
   ) {}
 
   async execute(command: AddCardCommand): Promise<void> {
@@ -22,8 +27,12 @@ export class AddCardUseCase implements ICommandHandler<AddCardCommand, void> {
 
       const repetition = learner.addCard(command.cardId);
 
-      await this.learnerRepository.saveRepetition(repetition, transaction);
+      await this.repetitionRepository.save(repetition, transaction);
     });
+
+    this.logger.debug(
+      `Card ${command.cardId.value} added by learner ${command.learnerId}`
+    );
   }
 
   private async assertCardDoesNotExist(

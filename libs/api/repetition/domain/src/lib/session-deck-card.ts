@@ -24,7 +24,7 @@ export class SessionDeckCard extends Card {
     this.assertSessionDeckContainsCurrentSessionNumber(session);
 
     if (this.lastSessionDeckNumberMatchesCurrentSessionNumber(session)) {
-      return RetiredDeckCard.move(this.id);
+      return RetiredDeckCard.move(this.id, session);
     }
 
     return this.stay();

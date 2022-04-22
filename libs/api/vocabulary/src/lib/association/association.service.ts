@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UpdateAssociationDto } from './dto/update-association.dto';
 import { Repository } from 'typeorm';
 import { AssociationEntity } from './association.entity';
@@ -7,6 +7,8 @@ import { UserId, Uuid } from '@voclearn/api/shared/domain';
 
 @Injectable()
 export class AssociationService {
+  private readonly logger = new Logger(AssociationService.name);
+
   constructor(
     @InjectRepository(AssociationEntity)
     private readonly associationRepository: Repository<AssociationEntity>
@@ -34,6 +36,8 @@ export class AssociationService {
     }
 
     await this.associationRepository.save(association);
+
+    this.logger.debug(`Association ${id.value} updated by user ${userId}`);
   }
 
   private static assertUserIsAuthorized(

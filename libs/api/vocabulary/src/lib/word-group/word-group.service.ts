@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateWordGroupDto } from './dto/create-word-group.dto';
 import { UpdateWordGroupDto } from './dto/update-word-group.dto';
 import { WordGroupEntity } from './word-group.entity';
@@ -7,12 +7,16 @@ import { WordGroupRepository } from './word-group.repository';
 
 @Injectable()
 export class WordGroupService {
+  private readonly logger = new Logger(WordGroupService.name);
+
   constructor(private readonly wordGroupRepository: WordGroupRepository) {}
 
   async create(dto: CreateWordGroupDto, userId: UserId): Promise<void> {
     const wordGroup = new WordGroupEntity(dto.id, dto.name, [], userId);
 
     await this.wordGroupRepository.save(wordGroup);
+
+    this.logger.debug(`Word group ${dto.id} created by user ${userId}`);
   }
 
   async findOne(id: Uuid, userId: UserId): Promise<WordGroupEntity> {
@@ -35,6 +39,8 @@ export class WordGroupService {
     }
 
     await this.wordGroupRepository.save(wordGroup);
+
+    this.logger.debug(`Word group ${id.value} updated by user ${userId}`);
   }
 
   async remove(id: Uuid, userId: UserId): Promise<void> {
@@ -49,6 +55,8 @@ export class WordGroupService {
     }
 
     await this.wordGroupRepository.remove(wordGroup);
+
+    this.logger.debug(`Word group ${id.value} removed by user ${userId}`);
   }
 
   private static assertUserIsAuthorized(

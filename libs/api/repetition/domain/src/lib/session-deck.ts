@@ -21,7 +21,7 @@ export class SessionDeck {
   }
 
   private getLastNumber(): number {
-    const numbers = this.numbers;
+    const numbers = this.numbers.slice();
 
     console.log(this.numbers);
     const lastNumber = numbers.pop();

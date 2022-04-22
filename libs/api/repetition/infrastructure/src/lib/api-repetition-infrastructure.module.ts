@@ -11,9 +11,14 @@ import { ApiSharedInfrastructureDomainEventPublisherModule } from '@voclearn/api
 import {
   GetCardToRepeatDataProvider,
   LearnerRepository,
+  RepetitionRepository,
 } from '@voclearn/api-repetition-application';
 import { TypeormLearnerRepository } from './learner-repository/typeorm-learner.repository';
 import { TypeormGetCardToRepeatDataProvider } from './get-card-to-repeat-data-provider/typeorm-get-card-to-repeat.data-provider';
+import { TypeormCardEntityRepository } from './learner-repository/typeorm-card-entity.repository';
+import { TypeormPartitionEntityRepository } from './learner-repository/typeorm-partition-entity.repository';
+import { TypeormLearnerEntityRepository } from './learner-repository/typeorm-learner-entity.repository';
+import { TypeormRepetitionRepository } from './repetition-repository/typeorm-repetition.repository';
 
 @Module({
   imports: [
@@ -28,14 +33,22 @@ import { TypeormGetCardToRepeatDataProvider } from './get-card-to-repeat-data-pr
       useClass: TypeormLearnerRepository,
     },
     {
+      provide: RepetitionRepository,
+      useClass: TypeormRepetitionRepository,
+    },
+    {
       provide: GetCardToRepeatDataProvider,
       useClass: TypeormGetCardToRepeatDataProvider,
     },
     LearnerMapper,
     CardMapper,
+    TypeormCardEntityRepository,
+    TypeormPartitionEntityRepository,
+    TypeormLearnerEntityRepository,
   ],
   exports: [
     LearnerRepository,
+    RepetitionRepository,
     GetCardToRepeatDataProvider,
     ApiSharedInfrastructureTransactionalModule,
     ApiSharedInfrastructureDomainEventPublisherModule,
