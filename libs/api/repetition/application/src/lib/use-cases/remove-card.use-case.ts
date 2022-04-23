@@ -24,6 +24,8 @@ export class RemoveCardUseCase
           transaction
         );
 
+      await this.learnerRepository.removeCard(command.cardId, transaction);
+
       if (isPartitionDeleted) {
         const learner = await this.learnerRepository.get(
           command.learnerId,
@@ -34,8 +36,6 @@ export class RemoveCardUseCase
 
         await this.learnerRepository.save(learner, transaction);
       }
-
-      await this.learnerRepository.removeCard(command.cardId, transaction);
     });
 
     this.logger.debug(

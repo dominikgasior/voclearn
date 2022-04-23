@@ -53,7 +53,9 @@ export class WordService {
   }
 
   async findOne(id: Uuid, userId: UserId): Promise<WordEntity> {
-    const word = await this.wordRepository.findOneOrFail(id.value);
+    const word = await this.wordRepository.findOneOrFail(id.value, {
+      relations: ['association'],
+    });
 
     WordService.assertUserIsAuthorized(word, userId);
 
@@ -66,11 +68,8 @@ export class WordService {
     if (dto.value !== undefined) {
       word.value = dto.value;
     }
-    if (dto.wordGroupId !== undefined) {
-      word.wordGroup = await this.wordGroupService.findOne(
-        new Uuid(dto.wordGroupId),
-        userId
-      );
+    if (dto.translation !== undefined) {
+      word.translation = dto.translation;
     }
 
     await this.wordRepository.save(word);
@@ -80,9 +79,11 @@ export class WordService {
 
   async remove(id: Uuid, userId: UserId): Promise<void> {
     const word = await this.findOne(id, userId);
+    console.log(word);
 
     await this.wordRepository.manager.transaction(async (entityManager) => {
       await entityManager.remove(word);
+      await entityManager.remove(word.association);
 
       await this.repetitionClient.removeWord(id, userId);
     });

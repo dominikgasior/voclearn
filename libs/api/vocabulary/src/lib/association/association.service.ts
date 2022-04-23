@@ -16,7 +16,8 @@ export class AssociationService {
 
   async findOne(id: Uuid, userId: UserId): Promise<AssociationEntity> {
     const association = await this.associationRepository.findOneOrFail(
-      id.value
+      id.value,
+      { relations: ['word'] }
     );
 
     AssociationService.assertUserIsAuthorized(association, userId);

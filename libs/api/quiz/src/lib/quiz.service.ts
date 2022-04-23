@@ -22,14 +22,18 @@ export class QuizService {
       userId
     );
 
-    this.logger.debug(`Question ${question.question} returned`);
+    this.logger.debug(
+      `Question ${question.question} returned for user ${userId}`
+    );
 
     return question;
   }
 
-  async answerQuestion(dto: AnswerQuestionDto, userId: UserId): Promise<void> {
-    const questionId = new Uuid(dto.questionId);
-
+  async answerQuestion(
+    questionId: Uuid,
+    dto: AnswerQuestionDto,
+    userId: UserId
+  ): Promise<void> {
     const isAnswerCorrect = await this.vocabularyClient.checkAnswer(
       questionId,
       dto.answer,
@@ -42,14 +46,18 @@ export class QuizService {
         userId
       );
 
-      this.logger.debug(`Question ${dto.questionId} answered successfully`);
+      this.logger.debug(
+        `Question ${questionId.value} answered successfully by user ${userId}`
+      );
     } else {
       await this.repetitionClient.answerQuestionUnsuccessfully(
         questionId,
         userId
       );
 
-      this.logger.debug(`Question ${dto.questionId} answered unsuccessfully`);
+      this.logger.debug(
+        `Question ${questionId.value} answered unsuccessfully by user ${userId}`
+      );
     }
   }
 }
