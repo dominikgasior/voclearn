@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'api-repetition-infrastructure',
-  preset: '../../../../jest.preset.js',
+  displayName: 'api',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +11,6 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../../coverage/libs/api/repetition/infrastructure',
+  coverageDirectory: '../../coverage/apps/api',
+  preset: '../../jest.preset.ts',
 };

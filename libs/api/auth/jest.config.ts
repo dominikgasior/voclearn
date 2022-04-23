@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'api-shared-rest-api',
-  preset: '../../../../jest.preset.js',
+  displayName: 'api-auth',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +11,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../../coverage/libs/api/shared/rest-api',
+  coverageDirectory: '../../../coverage/libs/api/auth',
+  preset: '../../../jest.preset.ts',
 };

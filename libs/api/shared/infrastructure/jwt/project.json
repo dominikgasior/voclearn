@@ -14,7 +14,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/api/shared/infrastructure/jwt"],
       "options": {
-        "jestConfig": "libs/api/shared/infrastructure/jwt/jest.config.js",
+        "jestConfig": "libs/api/shared/infrastructure/jwt/jest.config.ts",
         "passWithNoTests": true
       }
     }

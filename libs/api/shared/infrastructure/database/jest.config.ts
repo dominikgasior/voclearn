@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'api-shared-infrastructure-jwt',
-  preset: '../../../../../jest.preset.js',
+  displayName: 'api-shared-infrastructure-database',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -12,5 +12,6 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory:
-    '../../../../../coverage/libs/api/shared/infrastructure/jwt',
+    '../../../../../coverage/libs/api/shared/infrastructure/database',
+  preset: '../../../../../jest.preset.ts',
 };

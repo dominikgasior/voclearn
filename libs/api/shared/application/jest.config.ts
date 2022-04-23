@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'api-repetition-shell',
-  preset: '../../../../jest.preset.js',
+  displayName: 'api-shared-application',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +11,6 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../../coverage/libs/api/repetition/shell',
+  coverageDirectory: '../../../../coverage/libs/api/shared/application',
+  preset: '../../../../jest.preset.ts',
 };

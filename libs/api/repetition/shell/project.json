@@ -13,7 +13,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/api/repetition/shell"],
       "options": {
-        "jestConfig": "libs/api/repetition/shell/jest.config.js",
+        "jestConfig": "libs/api/repetition/shell/jest.config.ts",
         "passWithNoTests": true
       }
     }

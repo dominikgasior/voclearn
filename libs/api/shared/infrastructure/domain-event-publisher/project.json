@@ -17,7 +17,7 @@
         "coverage/libs/api/shared/infrastructure/domain-event-publisher"
       ],
       "options": {
-        "jestConfig": "libs/api/shared/infrastructure/domain-event-publisher/jest.config.js",
+        "jestConfig": "libs/api/shared/infrastructure/domain-event-publisher/jest.config.ts",
         "passWithNoTests": true
       }
     }

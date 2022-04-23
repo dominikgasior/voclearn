@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'api-shared-infrastructure-firebase',
-  preset: '../../../../../jest.preset.js',
+  displayName: 'api-shared-domain',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,6 +11,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory:
-    '../../../../../coverage/libs/api/shared/infrastructure/firebase',
+  coverageDirectory: '../../../../coverage/libs/api/shared/domain',
+  preset: '../../../../jest.preset.ts',
 };

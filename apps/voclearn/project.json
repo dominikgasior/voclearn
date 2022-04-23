@@ -85,7 +85,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/voclearn"],
       "options": {
-        "jestConfig": "apps/voclearn/jest.config.js",
+        "jestConfig": "apps/voclearn/jest.config.ts",
         "passWithNoTests": true
       }
     }
