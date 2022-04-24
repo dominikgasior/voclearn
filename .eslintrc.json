@@ -43,6 +43,10 @@
               {
                 "sourceTag": "scope:app",
                 "onlyDependOnLibsWithTags": ["scope:presentation"]
+              },
+              {
+                "sourceTag": "scope:voclearn",
+                "onlyDependOnLibsWithTags": ["scope:voclearn"]
               }
             ]
           }
