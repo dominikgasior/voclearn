@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { Email } from '../../dtos/email';
 import { Password } from '../../dtos/password';
-import { AuthService } from '../../services/auth.service';
+import { FullName } from '../../dtos/full-name';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'voclearn-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'voclearn-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   form!: FormGroup;
   hide = true;
 
@@ -24,19 +25,22 @@ export class LoginComponent implements OnInit {
     this.form = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
     });
   }
 
   onSubmit(): void {
     if (this.form.valid) {
-      this.authService.authenticate(
+      this.authService.register(
         new Email(this.form.value.email),
-        new Password(this.form.value.password)
+        new Password(this.form.value.password),
+        new FullName(this.form.value.firstName, this.form.value.lastName)
       );
     }
   }
 
-  onRegisterButtonClicked(): void {
-    this.router.navigate(['/auth/register']);
+  onLoginButtonClicked(): void {
+    this.router.navigate(['/auth/login']);
   }
 }

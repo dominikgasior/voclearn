@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthStorage } from './auth.storage';
 import { Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
+import { FullName } from '../dtos/full-name';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
 
   authenticate(email: Email, password: Password): void {
     this.httpClient
-      .post<void>('http://localhost:3333/api/auth/login', {
+      .post<void>('/api/auth/login', {
         email: email.toString(),
         password: password.toString(),
       })
@@ -24,6 +25,26 @@ export class AuthService {
         tap(() => {
           this.authStorage.setAuthenticated();
           this.router.navigate(['/']);
+        }),
+        catchError((error) => {
+          console.error(error);
+          return of(error);
+        })
+      )
+      .subscribe();
+  }
+
+  register(email: Email, password: Password, fullName: FullName): void {
+    this.httpClient
+      .post<void>('/api/auth/register', {
+        email: email.toString(),
+        password: password.toString(),
+        firstName: fullName.getFirstName(),
+        lastName: fullName.getLastName(),
+      })
+      .pipe(
+        tap(() => {
+          this.router.navigate(['/auth/login']);
         }),
         catchError((error) => {
           console.error(error);

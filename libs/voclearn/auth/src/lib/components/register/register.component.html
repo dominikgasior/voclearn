@@ -1,9 +1,19 @@
 <section>
   <mat-card>
-    <mat-card-title>Logowanie</mat-card-title>
+    <mat-card-title>Rejestracja</mat-card-title>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Imię</mat-label>
+          <input type="text" formControlName="firstName" matInput required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Nazwisko</mat-label>
+          <input type="text" formControlName="lastName" matInput required />
+        </mat-form-field>
+
         <mat-form-field appearance="fill">
           <mat-label>Adres email</mat-label>
           <input type="email" formControlName="email" matInput required />
@@ -27,7 +37,7 @@
       <mat-card-actions>
         <div>
           <button mat-raised-button color="primary" class="login-btn" [disabled]="!form.valid">
-            Zaloguj się
+            Zarejestruj się
           </button>
         </div>
       </mat-card-actions>
@@ -35,8 +45,8 @@
 
     <mat-card-actions>
       <div>
-        <button mat-flat-button class="register-btn" (click)="onRegisterButtonClicked()">
-          Nie masz konta? Zarejestruj się
+        <button mat-flat-button class="register-btn" (click)="onLoginButtonClicked()">
+          Masz już konto? Zaloguj się
         </button>
       </div>
     </mat-card-actions>

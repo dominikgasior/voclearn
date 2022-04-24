@@ -12,6 +12,7 @@ import { AlreadyAuthenticatedGuard } from './guards/already-authenticated.guard'
 import { AuthStorage } from './services/auth.storage';
 import { LocalStorageAuthStorage } from './services/local-storage-auth.storage';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     ReactiveFormsModule,
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, RegisterComponent],
   providers: [
     AuthService,
     AlreadyAuthenticatedGuard,
