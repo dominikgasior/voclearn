@@ -37,7 +37,8 @@
                   "scope:presentation",
                   "scope:infrastructure",
                   "scope:application",
-                  "scope:domain"
+                  "scope:domain",
+                  "scope:shared"
                 ]
               },
               {
@@ -46,7 +47,7 @@
               },
               {
                 "sourceTag": "scope:voclearn",
-                "onlyDependOnLibsWithTags": ["scope:voclearn"]
+                "onlyDependOnLibsWithTags": ["scope:voclearn", "scope:shared"]
               }
             ]
           }

@@ -6,6 +6,10 @@ import { AuthStorage } from './auth.storage';
 import { Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
 import { FullName } from '../dtos/full-name';
+import {
+  LoginRequestContract,
+  RegisterRequestContract,
+} from '@voclearn/contracts';
 
 @Injectable()
 export class AuthService {
@@ -16,11 +20,13 @@ export class AuthService {
   ) {}
 
   authenticate(email: Email, password: Password): void {
+    const body: LoginRequestContract = {
+      email: email.toString(),
+      password: password.toString(),
+    };
+
     this.httpClient
-      .post<void>('/api/auth/login', {
-        email: email.toString(),
-        password: password.toString(),
-      })
+      .post<void>('/api/auth/login', body)
       .pipe(
         tap(() => {
           this.authStorage.setAuthenticated();
@@ -35,13 +41,15 @@ export class AuthService {
   }
 
   register(email: Email, password: Password, fullName: FullName): void {
+    const body: RegisterRequestContract = {
+      email: email.toString(),
+      password: password.toString(),
+      firstName: fullName.getFirstName(),
+      lastName: fullName.getLastName(),
+    };
+
     this.httpClient
-      .post<void>('/api/auth/register', {
-        email: email.toString(),
-        password: password.toString(),
-        firstName: fullName.getFirstName(),
-        lastName: fullName.getLastName(),
-      })
+      .post<void>('/api/auth/register', body)
       .pipe(
         tap(() => {
           this.router.navigate(['/auth/login']);

@@ -60,6 +60,7 @@
         "libs/api/shared/rest-api/src/index.ts"
       ],
       "@voclearn/api/vocabulary": ["libs/api/vocabulary/src/index.ts"],
+      "@voclearn/contracts": ["libs/contracts/src/index.ts"],
       "@voclearn/voclearn-header": ["libs/voclearn/header/src/index.ts"],
       "@voclearn/voclearn/auth": ["libs/voclearn/auth/src/index.ts"],
       "@voclearn/voclearn/core": ["libs/voclearn/core/src/index.ts"]
