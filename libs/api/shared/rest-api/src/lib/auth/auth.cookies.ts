@@ -42,9 +42,7 @@ export const attachAuthCookiesToResponse = (
     httpOnly: true,
   });
 
-  response.cookie(isAuthenticatedCookieKey, cookies[isAuthenticatedCookieKey], {
-    sameSite: 'lax',
-  });
+  response.cookie(isAuthenticatedCookieKey, cookies[isAuthenticatedCookieKey]);
 };
 
 export const overwriteAuthCookiesInRequest = (

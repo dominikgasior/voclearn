@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { VoclearnHeaderModule } from '@voclearn/voclearn-header';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { WithCredentialsInterceptor } from './with-credentials.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -11,8 +13,16 @@ import { VoclearnHeaderModule } from '@voclearn/voclearn-header';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    HttpClientModule,
     VoclearnHeaderModule,
   ],
   bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: WithCredentialsInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class AppModule {}
