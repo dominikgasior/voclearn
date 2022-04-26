@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { map, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class AlreadyAuthenticatedGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router
@@ -21,11 +21,10 @@ export class AlreadyAuthenticatedGuard implements CanActivate {
   ): Observable<boolean> {
     return this.authService.isAuthorized.pipe(
       tap((isAuthenticated) => {
-        if (isAuthenticated) {
-          this.router.navigate(['/vocabulary']);
+        if (!isAuthenticated) {
+          this.router.navigate(['/auth']);
         }
-      }),
-      map((value: boolean) => !value)
+      })
     );
   }
 }

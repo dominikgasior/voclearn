@@ -12,10 +12,17 @@ const routes: Routes = [
             (m) => m.VoclearnAuthShellModule
           ),
       },
-      // {
-      //   path: '**',
-      //   redirectTo: 'auth',
-      // },
+      {
+        path: 'vocabulary',
+        loadChildren: () =>
+          import('@voclearn/voclearn/vocabulary/shell').then(
+            (m) => m.VoclearnVocabularyShellModule
+          ),
+      },
+      {
+        path: '**',
+        redirectTo: 'vocabulary',
+      },
     ],
   },
 ];

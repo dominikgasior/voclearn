@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthLocalStorage } from './services/auth.local-storage';
-import { AuthService } from './services/auth.service';
 import { AlreadyAuthenticatedGuard } from './guards/already-authenticated.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   imports: [CommonModule],
-  providers: [AuthService, AuthLocalStorage, AlreadyAuthenticatedGuard],
+  providers: [AlreadyAuthenticatedGuard, AuthGuard],
 })
 export class VoclearnAuthApiModule {}
