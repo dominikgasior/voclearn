@@ -3,9 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: () =>
-      import('@voclearn/voclearn/auth').then((m) => m.VoclearnAuthModule),
+    path: '',
+    children: [
+      {
+        path: 'auth',
+        loadChildren: () =>
+          import('@voclearn/voclearn/auth/shell').then(
+            (m) => m.VoclearnAuthShellModule
+          ),
+      },
+      // {
+      //   path: '**',
+      //   redirectTo: 'auth',
+      // },
+    ],
   },
 ];
 

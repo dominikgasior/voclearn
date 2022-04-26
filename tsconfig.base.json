@@ -61,9 +61,18 @@
       ],
       "@voclearn/api/vocabulary": ["libs/api/vocabulary/src/index.ts"],
       "@voclearn/contracts": ["libs/contracts/src/index.ts"],
-      "@voclearn/voclearn-header": ["libs/voclearn/header/src/index.ts"],
-      "@voclearn/voclearn/auth": ["libs/voclearn/auth/src/index.ts"],
-      "@voclearn/voclearn/core": ["libs/voclearn/core/src/index.ts"]
+      "@voclearn/voclearn/auth/api": ["libs/voclearn/auth/api/src/index.ts"],
+      "@voclearn/voclearn/auth/shell": [
+        "libs/voclearn/auth/shell/src/index.ts"
+      ],
+      "@voclearn/voclearn/auth/ui/login": [
+        "libs/voclearn/auth/ui/login/src/index.ts"
+      ],
+      "@voclearn/voclearn/auth/ui/register": [
+        "libs/voclearn/auth/ui/register/src/index.ts"
+      ],
+      "@voclearn/voclearn/core": ["libs/voclearn/core/src/index.ts"],
+      "@voclearn/voclearn/header": ["libs/voclearn/header/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

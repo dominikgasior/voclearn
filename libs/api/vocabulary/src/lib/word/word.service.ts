@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WordGroupService } from '../word-group/word-group.service';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
-import { AssociationEntity } from '../association/association.entity';
+import { VoclearnAuthShellsociationEntity } from '../association/association.entity';
 import { RepetitionClient } from '../repetition/repetition.client';
 
 @Injectable()
@@ -34,7 +34,7 @@ export class WordService {
       userId
     );
 
-    const association = new AssociationEntity(
+    const association = new VoclearnAuthShellsociationEntity(
       dto.associationId,
       dto.associationNote,
       word

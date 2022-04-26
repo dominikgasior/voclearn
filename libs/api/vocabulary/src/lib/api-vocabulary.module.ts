@@ -11,9 +11,9 @@ import {
 import { WordGroupController } from './word-group/word-group.controller';
 import { WordGroupService } from './word-group/word-group.service';
 import { WordGroupEntity } from './word-group/word-group.entity';
-import { AssociationController } from './association/association.controller';
-import { AssociationService } from './association/association.service';
-import { AssociationEntity } from './association/association.entity';
+import { VoclearnAuthShellsociationController } from './association/association.controller';
+import { VoclearnAuthShellsociationService } from './association/association.service';
+import { VoclearnAuthShellsociationEntity } from './association/association.entity';
 import { WordGroupRepository } from './word-group/word-group.repository';
 import { ApiSharedInfrastructureDatabaseModule } from '@voclearn/api/shared/infrastructure/database';
 import { RepetitionClient } from './repetition/repetition.client';
@@ -27,7 +27,7 @@ import { VocabularyFacade } from './api/vocabulary.facade';
       WordEntity,
       WordGroupEntity,
       WordGroupRepository,
-      AssociationEntity,
+      VoclearnAuthShellsociationEntity,
     ]),
     ApiSharedRestApiModule,
     ApiRepetitionModule,
@@ -35,17 +35,25 @@ import { VocabularyFacade } from './api/vocabulary.facade';
   providers: [
     WordService,
     WordGroupService,
-    AssociationService,
+    VoclearnAuthShellsociationService,
     RepetitionClient,
     VocabularyFacade,
   ],
-  controllers: [WordController, WordGroupController, AssociationController],
+  controllers: [
+    WordController,
+    WordGroupController,
+    VoclearnAuthShellsociationController,
+  ],
   exports: [VocabularyFacade],
 })
 export class ApiVocabularyModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(RefreshTokenAuthMiddleware, AuthMiddleware)
-      .forRoutes(WordController, WordGroupController, AssociationController);
+      .forRoutes(
+        WordController,
+        WordGroupController,
+        VoclearnAuthShellsociationController
+      );
   }
 }

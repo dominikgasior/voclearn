@@ -2,7 +2,7 @@ import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 import { WordEntity } from '../word/word.entity';
 
 @Entity('associations')
-export class AssociationEntity {
+export class VoclearnAuthShellsociationEntity {
   @PrimaryColumn('uuid')
   readonly id: string;
 

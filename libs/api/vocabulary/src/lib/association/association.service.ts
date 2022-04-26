@@ -1,26 +1,32 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UpdateAssociationDto } from './dto/update-association.dto';
 import { Repository } from 'typeorm';
-import { AssociationEntity } from './association.entity';
+import { VoclearnAuthShellsociationEntity } from './association.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
 
 @Injectable()
-export class AssociationService {
-  private readonly logger = new Logger(AssociationService.name);
+export class VoclearnAuthShellsociationService {
+  private readonly logger = new Logger(VoclearnAuthShellsociationService.name);
 
   constructor(
-    @InjectRepository(AssociationEntity)
-    private readonly associationRepository: Repository<AssociationEntity>
+    @InjectRepository(VoclearnAuthShellsociationEntity)
+    private readonly associationRepository: Repository<VoclearnAuthShellsociationEntity>
   ) {}
 
-  async findOne(id: Uuid, userId: UserId): Promise<AssociationEntity> {
+  async findOne(
+    id: Uuid,
+    userId: UserId
+  ): Promise<VoclearnAuthShellsociationEntity> {
     const association = await this.associationRepository.findOneOrFail(
       id.value,
       { relations: ['word'] }
     );
 
-    AssociationService.assertUserIsAuthorized(association, userId);
+    VoclearnAuthShellsociationService.assertUserIsAuthorized(
+      association,
+      userId
+    );
 
     return association;
   }
@@ -38,11 +44,13 @@ export class AssociationService {
 
     await this.associationRepository.save(association);
 
-    this.logger.debug(`Association ${id.value} updated by user ${userId}`);
+    this.logger.debug(
+      `VoclearnAuthShellsociation ${id.value} updated by user ${userId}`
+    );
   }
 
   private static assertUserIsAuthorized(
-    association: AssociationEntity,
+    association: VoclearnAuthShellsociationEntity,
     userId: UserId
   ): void {
     if (association.word.userId !== userId) {

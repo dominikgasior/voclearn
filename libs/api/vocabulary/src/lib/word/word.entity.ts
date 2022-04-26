@@ -7,7 +7,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { WordGroupEntity } from '../word-group/word-group.entity';
-import { AssociationEntity } from '../association/association.entity';
+import { VoclearnAuthShellsociationEntity } from '../association/association.entity';
 
 @Entity('words')
 export class WordEntity {
@@ -25,11 +25,15 @@ export class WordEntity {
   })
   wordGroup: WordGroupEntity;
 
-  @OneToOne(() => AssociationEntity, (association) => association.word, {
-    nullable: false,
-  })
+  @OneToOne(
+    () => VoclearnAuthShellsociationEntity,
+    (association) => association.word,
+    {
+      nullable: false,
+    }
+  )
   @JoinColumn()
-  association!: AssociationEntity;
+  association!: VoclearnAuthShellsociationEntity;
 
   @Column()
   userId: string;
