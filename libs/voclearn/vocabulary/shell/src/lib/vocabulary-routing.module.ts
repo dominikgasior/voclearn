@@ -9,6 +9,10 @@ const routes: Routes = [
     children: [
       {
         path: 'words',
+        loadChildren: () =>
+          import('@voclearn/voclearn/vocabulary/ui/word').then(
+            (m) => m.VoclearnVocabularyUiWordModule
+          ),
       },
       {
         path: '**',
