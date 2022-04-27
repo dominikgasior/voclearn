@@ -6,8 +6,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WordGroupService } from '../word-group/word-group.service';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
-import { VoclearnAuthShellsociationEntity } from '../association/association.entity';
+import { AssociationEntity } from '../association/association.entity';
 import { RepetitionClient } from '../repetition/repetition.client';
+import { Word } from './dto/word';
+import { WordMapper } from './word.mapper';
 
 @Injectable()
 export class WordService {
@@ -17,8 +19,24 @@ export class WordService {
     @InjectRepository(WordEntity)
     private readonly wordRepository: Repository<WordEntity>,
     private readonly wordGroupService: WordGroupService,
-    private readonly repetitionClient: RepetitionClient
+    private readonly repetitionClient: RepetitionClient,
+    private readonly wordMapper: WordMapper
   ) {}
+
+  async get(id: Uuid, userId: UserId): Promise<Word> {
+    const wordEntity = await this.findOne(id, userId);
+
+    return this.wordMapper.map(wordEntity);
+  }
+
+  async list(userId: UserId): Promise<Word[]> {
+    const wordEntities = await this.wordRepository.find({
+      where: { userId },
+      relations: ['association'],
+    });
+
+    return this.wordMapper.mapMany(wordEntities);
+  }
 
   async create(dto: CreateWordDto, userId: UserId): Promise<void> {
     const wordGroup = await this.wordGroupService.findOne(
@@ -34,7 +52,7 @@ export class WordService {
       userId
     );
 
-    const association = new VoclearnAuthShellsociationEntity(
+    const association = new AssociationEntity(
       dto.associationId,
       dto.associationNote,
       word
@@ -50,16 +68,6 @@ export class WordService {
     });
 
     this.logger.debug(`Word ${dto.id} created by user ${userId}`);
-  }
-
-  async findOne(id: Uuid, userId: UserId): Promise<WordEntity> {
-    const word = await this.wordRepository.findOneOrFail(id.value, {
-      relations: ['association'],
-    });
-
-    WordService.assertUserIsAuthorized(word, userId);
-
-    return word;
   }
 
   async update(id: Uuid, dto: UpdateWordDto, userId: UserId): Promise<void> {
@@ -107,6 +115,16 @@ export class WordService {
     );
 
     return result;
+  }
+
+  private async findOne(id: Uuid, userId: UserId): Promise<WordEntity> {
+    const word = await this.wordRepository.findOneOrFail(id.value, {
+      relations: ['association'],
+    });
+
+    WordService.assertUserIsAuthorized(word, userId);
+
+    return word;
   }
 
   private static assertUserIsAuthorized(

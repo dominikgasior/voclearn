@@ -1,35 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UpdateAssociationDto } from './dto/update-association.dto';
 import { Repository } from 'typeorm';
-import { VoclearnAuthShellsociationEntity } from './association.entity';
+import { AssociationEntity } from './association.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
 
 @Injectable()
-export class VoclearnAuthShellsociationService {
-  private readonly logger = new Logger(VoclearnAuthShellsociationService.name);
+export class AssociationService {
+  private readonly logger = new Logger(AssociationService.name);
 
   constructor(
-    @InjectRepository(VoclearnAuthShellsociationEntity)
-    private readonly associationRepository: Repository<VoclearnAuthShellsociationEntity>
+    @InjectRepository(AssociationEntity)
+    private readonly associationRepository: Repository<AssociationEntity>
   ) {}
-
-  async findOne(
-    id: Uuid,
-    userId: UserId
-  ): Promise<VoclearnAuthShellsociationEntity> {
-    const association = await this.associationRepository.findOneOrFail(
-      id.value,
-      { relations: ['word'] }
-    );
-
-    VoclearnAuthShellsociationService.assertUserIsAuthorized(
-      association,
-      userId
-    );
-
-    return association;
-  }
 
   async update(
     id: Uuid,
@@ -44,13 +27,22 @@ export class VoclearnAuthShellsociationService {
 
     await this.associationRepository.save(association);
 
-    this.logger.debug(
-      `VoclearnAuthShellsociation ${id.value} updated by user ${userId}`
+    this.logger.debug(`Association ${id.value} updated by user ${userId}`);
+  }
+
+  private async findOne(id: Uuid, userId: UserId): Promise<AssociationEntity> {
+    const association = await this.associationRepository.findOneOrFail(
+      id.value,
+      { relations: ['word'] }
     );
+
+    AssociationService.assertUserIsAuthorized(association, userId);
+
+    return association;
   }
 
   private static assertUserIsAuthorized(
-    association: VoclearnAuthShellsociationEntity,
+    association: AssociationEntity,
     userId: UserId
   ): void {
     if (association.word.userId !== userId) {

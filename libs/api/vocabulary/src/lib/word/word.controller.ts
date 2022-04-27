@@ -7,16 +7,24 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Get,
 } from '@nestjs/common';
 import { WordService } from './word.service';
 import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { Uuid } from '@voclearn/api/shared/domain';
+import { Word } from './dto/word';
 
 @Controller('word')
 export class WordController {
   constructor(private readonly wordService: WordService) {}
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  list(@AuthUser() user: AuthenticatedUser): Promise<Word[]> {
+    return this.wordService.list(user.id);
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
