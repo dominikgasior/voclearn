@@ -7,16 +7,24 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Get,
 } from '@nestjs/common';
 import { WordGroupService } from './word-group.service';
 import { CreateWordGroupDto } from './dto/create-word-group.dto';
 import { UpdateWordGroupDto } from './dto/update-word-group.dto';
 import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { Uuid } from '@voclearn/api/shared/domain';
+import { WordGroup } from './dto/word-group';
 
 @Controller('word-group')
 export class WordGroupController {
   constructor(private readonly wordGroupService: WordGroupService) {}
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  list(@AuthUser() user: AuthenticatedUser): Promise<WordGroup[]> {
+    return this.wordGroupService.list(user.id);
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

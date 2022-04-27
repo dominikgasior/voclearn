@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import { CreateWordContract } from '@voclearn/contracts';
 
-export class CreateWordDto {
+export class CreateWordDto implements CreateWordContract {
   @IsNotEmpty()
   @IsUUID()
   id!: string;

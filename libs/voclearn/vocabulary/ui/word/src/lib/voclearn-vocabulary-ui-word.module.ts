@@ -7,6 +7,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AssociationDialogComponent } from './association/association-dialog.component';
+import { NewWordDialogComponent } from './new-word-dialog/new-word-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { EditWordDialogComponent } from './edit-word-dialog/edit-word-dialog.component';
 
 const routes: Routes = [
   {
@@ -24,7 +32,17 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
   ],
-  declarations: [WordComponent],
+  declarations: [
+    WordComponent,
+    AssociationDialogComponent,
+    NewWordDialogComponent,
+    EditWordDialogComponent,
+  ],
 })
 export class VoclearnVocabularyUiWordModule {}

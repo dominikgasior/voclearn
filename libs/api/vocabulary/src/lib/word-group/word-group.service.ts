@@ -4,12 +4,39 @@ import { UpdateWordGroupDto } from './dto/update-word-group.dto';
 import { WordGroupEntity } from './word-group.entity';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { WordGroupRepository } from './word-group.repository';
+import { WordGroup } from './dto/word-group';
+import { WordGroupMapper } from './word-group.mapper';
 
 @Injectable()
 export class WordGroupService {
   private readonly logger = new Logger(WordGroupService.name);
 
-  constructor(private readonly wordGroupRepository: WordGroupRepository) {}
+  constructor(
+    private readonly wordGroupRepository: WordGroupRepository,
+    private readonly wordGroupMapper: WordGroupMapper
+  ) {}
+
+  async get(id: Uuid, userId: UserId): Promise<WordGroup> {
+    const wordGroupEntity = await this.findOne(id, userId);
+
+    const wordGroup = this.wordGroupMapper.map(wordGroupEntity);
+
+    this.logger.debug(`Word group ${wordGroup.id} got by user ${userId}`);
+
+    return wordGroup;
+  }
+
+  async list(userId: UserId): Promise<WordGroup[]> {
+    const wordGroupEntities = await this.wordGroupRepository.find({
+      where: { userId },
+    });
+
+    const wordGroups = this.wordGroupMapper.mapMany(wordGroupEntities);
+
+    this.logger.debug(`Word groups listed by user ${userId}`);
+
+    return wordGroups;
+  }
 
   async create(dto: CreateWordGroupDto, userId: UserId): Promise<void> {
     const wordGroup = new WordGroupEntity(dto.id, dto.name, [], userId);
@@ -17,14 +44,6 @@ export class WordGroupService {
     await this.wordGroupRepository.save(wordGroup);
 
     this.logger.debug(`Word group ${dto.id} created by user ${userId}`);
-  }
-
-  async findOne(id: Uuid, userId: UserId): Promise<WordGroupEntity> {
-    const wordGroup = await this.wordGroupRepository.findOneOrFail(id.value);
-
-    WordGroupService.assertUserIsAuthorized(wordGroup, userId);
-
-    return wordGroup;
   }
 
   async update(
@@ -57,6 +76,14 @@ export class WordGroupService {
     await this.wordGroupRepository.remove(wordGroup);
 
     this.logger.debug(`Word group ${id.value} removed by user ${userId}`);
+  }
+
+  private async findOne(id: Uuid, userId: UserId): Promise<WordGroupEntity> {
+    const wordGroup = await this.wordGroupRepository.findOneOrFail(id.value);
+
+    WordGroupService.assertUserIsAuthorized(wordGroup, userId);
+
+    return wordGroup;
   }
 
   private static assertUserIsAuthorized(
