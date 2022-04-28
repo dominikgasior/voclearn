@@ -83,6 +83,9 @@
       ],
       "@voclearn/voclearn/vocabulary/ui/word": [
         "libs/voclearn/vocabulary/ui/word/src/index.ts"
+      ],
+      "@voclearn/voclearn/vocabulary/ui/word-group": [
+        "libs/voclearn/vocabulary/ui/word-group/src/index.ts"
       ]
     }
   },

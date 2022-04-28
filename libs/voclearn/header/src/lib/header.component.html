@@ -2,18 +2,18 @@
   <span>Voclearn</span>
 
   <ng-container *ngIf="isAuthorized">
-    <button mat-button>
+    <a mat-button [routerLink]="'/vocabulary/words'">
       <mat-icon>translate</mat-icon>
       Słówka
-    </button>
-    <button mat-button>
+    </a>
+    <a mat-button [routerLink]="'/vocabulary/word-groups'">
       <mat-icon>inventory</mat-icon>
       Grupy słówek
-    </button>
-    <button mat-button>
+    </a>
+    <a mat-button>
       <mat-icon>quiz</mat-icon>
       Quiz
-    </button>
+    </a>
 
     <span class="example-spacer"></span>
 

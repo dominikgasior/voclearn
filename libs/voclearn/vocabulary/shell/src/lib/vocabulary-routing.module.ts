@@ -15,6 +15,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'word-groups',
+        loadChildren: () =>
+          import('@voclearn/voclearn/vocabulary/ui/word-group').then(
+            (m) => m.VoclearnVocabularyUiWordGroupModule
+          ),
+      },
+      {
         path: '**',
         redirectTo: 'words',
       },
