@@ -12,6 +12,7 @@ import { QuizService } from './quiz.service';
 import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { AnswerQuestionDto } from './dto/answer-question.dto';
 import { Uuid } from '@voclearn/api/shared/domain';
+import { AnsweredQuestion } from './dto/answered-question';
 
 @Controller('quiz')
 export class QuizController {
@@ -24,12 +25,12 @@ export class QuizController {
   }
 
   @Post('question/:id/answer')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
   answerQuestion(
     @Param('id') id: string,
     @Body() dto: AnswerQuestionDto,
     @AuthUser() user: AuthenticatedUser
-  ): Promise<void> {
+  ): Promise<AnsweredQuestion> {
     return this.service.answerQuestion(new Uuid(id), dto, user.id);
   }
 }

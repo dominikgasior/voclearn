@@ -123,24 +123,6 @@ export class WordService {
     this.logger.debug(`Word ${id.value} removed by user ${userId}`);
   }
 
-  async checkWordTranslation(
-    wordId: Uuid,
-    translation: string,
-    userId: UserId
-  ): Promise<boolean> {
-    const word = await this.findOne(wordId, userId);
-
-    const wordTranslation = word.translation;
-
-    const result = wordTranslation === translation;
-
-    this.logger.debug(
-      `Translation ${translation} for word ${wordId.value} checked by user ${userId}, result = ${result}`
-    );
-
-    return result;
-  }
-
   private async findOne(id: Uuid, userId: UserId): Promise<WordEntity> {
     const word = await this.wordRepository.findOneOrFail(id.value, {
       relations: ['association', 'wordGroup'],

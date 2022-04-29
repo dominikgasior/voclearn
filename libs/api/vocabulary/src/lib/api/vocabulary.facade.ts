@@ -10,12 +10,4 @@ export class VocabularyFacade {
   getWord(wordId: Uuid, userId: UserId): Promise<Word> {
     return this.wordService.get(wordId, userId);
   }
-
-  checkWordTranslation(
-    wordId: Uuid,
-    translation: string,
-    userId: UserId
-  ): Promise<boolean> {
-    return this.wordService.checkWordTranslation(wordId, translation, userId);
-  }
 }

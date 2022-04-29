@@ -4,6 +4,7 @@ import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { Question } from './dto/question';
 import { VocabularyClient } from './vocabulary/vocabulary.client';
 import { AnswerQuestionDto } from './dto/answer-question.dto';
+import { AnsweredQuestion } from './dto/answered-question';
 
 @Injectable()
 export class QuizService {
@@ -33,12 +34,13 @@ export class QuizService {
     questionId: Uuid,
     dto: AnswerQuestionDto,
     userId: UserId
-  ): Promise<void> {
-    const isAnswerCorrect = await this.vocabularyClient.checkAnswer(
+  ): Promise<AnsweredQuestion> {
+    const correctAnswer = await this.vocabularyClient.getAnswer(
       questionId,
-      dto.answer,
       userId
     );
+
+    const isAnswerCorrect = correctAnswer === dto.answer;
 
     if (isAnswerCorrect) {
       await this.repetitionClient.answerQuestionSuccessfully(
@@ -59,5 +61,7 @@ export class QuizService {
         `Question ${questionId.value} answered unsuccessfully by user ${userId}`
       );
     }
+
+    return new AnsweredQuestion(isAnswerCorrect, correctAnswer);
   }
 }

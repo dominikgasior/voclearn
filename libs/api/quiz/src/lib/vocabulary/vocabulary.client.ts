@@ -3,6 +3,8 @@ import { VocabularyFacade } from '@voclearn/api/vocabulary';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { Question } from '../dto/question';
 
+export type Answer = string;
+
 @Injectable()
 export class VocabularyClient {
   constructor(private readonly vocabularyFacade: VocabularyFacade) {}
@@ -13,15 +15,9 @@ export class VocabularyClient {
     return new Question(word.id, word.value);
   }
 
-  checkAnswer(
-    questionId: Uuid,
-    answer: string,
-    userId: UserId
-  ): Promise<boolean> {
-    return this.vocabularyFacade.checkWordTranslation(
-      questionId,
-      answer,
-      userId
-    );
+  async getAnswer(questionId: Uuid, userId: UserId): Promise<Answer> {
+    const word = await this.vocabularyFacade.getWord(questionId, userId);
+
+    return word.translation;
   }
 }
