@@ -6,3 +6,5 @@ export * from './lib/vocabulary/create-word.contract';
 export * from './lib/vocabulary/word-group.contract';
 export * from './lib/vocabulary/update-word.contract';
 export * from './lib/vocabulary/update-word-group.contract';
+export * from './lib/quiz/question.contract';
+export * from './lib/quiz/answered-question.contract';

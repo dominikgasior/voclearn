@@ -12,7 +12,7 @@ export class VocabularyClient {
   async getQuestion(questionId: Uuid, userId: UserId): Promise<Question> {
     const word = await this.vocabularyFacade.getWord(questionId, userId);
 
-    return new Question(word.id, word.value);
+    return new Question(word.id, word.value, word.association.note);
   }
 
   async getAnswer(questionId: Uuid, userId: UserId): Promise<Answer> {

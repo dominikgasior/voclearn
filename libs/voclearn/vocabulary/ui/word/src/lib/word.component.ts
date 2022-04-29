@@ -9,11 +9,11 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { WordService } from '@voclearn/voclearn/vocabulary/api';
-import { AssociationDialogComponent } from './association/association-dialog.component';
 import { NewWordDialogComponent } from './new-word-dialog/new-word-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { EditWordDialogComponent } from './edit-word-dialog/edit-word-dialog.component';
+import { AssociationDialogComponent } from '@voclearn/voclearn/vocabulary/ui/association-dialog';
 
 @Component({
   selector: 'voclearn-word',
@@ -35,8 +35,8 @@ export class WordComponent implements OnInit {
     });
   }
 
-  onOpenAssociationDialogButtonClicked(association: AssociationContract): void {
-    this.dialog.open(AssociationDialogComponent, { data: association });
+  onShowAssociationButtonClicked(association: AssociationContract): void {
+    this.dialog.open(AssociationDialogComponent, { data: association.note });
   }
 
   onDeleteWordButtonClicked(wordId: string): void {

@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AssociationDialogComponent } from './association/association-dialog.component';
 import { NewWordDialogComponent } from './new-word-dialog/new-word-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,7 +39,6 @@ const routes: Routes = [
   ],
   declarations: [
     WordComponent,
-    AssociationDialogComponent,
     NewWordDialogComponent,
     EditWordDialogComponent,
   ],

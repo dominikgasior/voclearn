@@ -22,6 +22,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'quiz',
+        loadChildren: () =>
+          import('@voclearn/voclearn/vocabulary/ui/quiz').then(
+            (m) => m.VoclearnVocabularyUiQuizModule
+          ),
+      },
+      {
         path: '**',
         redirectTo: 'words',
       },

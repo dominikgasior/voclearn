@@ -81,6 +81,12 @@
       "@voclearn/voclearn/vocabulary/shell": [
         "libs/voclearn/vocabulary/shell/src/index.ts"
       ],
+      "@voclearn/voclearn/vocabulary/ui/association-dialog": [
+        "libs/voclearn/vocabulary/ui/association-dialog/src/index.ts"
+      ],
+      "@voclearn/voclearn/vocabulary/ui/quiz": [
+        "libs/voclearn/vocabulary/ui/quiz/src/index.ts"
+      ],
       "@voclearn/voclearn/vocabulary/ui/word": [
         "libs/voclearn/vocabulary/ui/word/src/index.ts"
       ],
