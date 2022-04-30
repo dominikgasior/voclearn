@@ -1,4 +1,4 @@
-export interface UpdateWordContract {
+export interface UpdateWordRequestContract {
   value?: string;
   translation?: string;
   wordGroupId?: string;

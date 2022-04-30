@@ -10,8 +10,8 @@ import {
   Get,
 } from '@nestjs/common';
 import { WordService } from './word.service';
-import { CreateWordDto } from './dto/create-word.dto';
-import { UpdateWordDto } from './dto/update-word.dto';
+import { CreateWordRequest } from './dto/create-word.request';
+import { UpdateWordRequest } from './dto/update-word.request';
 import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { Uuid } from '@voclearn/api/shared/domain';
 import { Word } from './dto/word';
@@ -29,20 +29,20 @@ export class WordController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(
-    @Body() dto: CreateWordDto,
+    @Body() requestBody: CreateWordRequest,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.wordService.create(dto, user.id);
+    return this.wordService.create(requestBody, user.id);
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   update(
     @Param('id') id: string,
-    @Body() dto: UpdateWordDto,
+    @Body() requestBody: UpdateWordRequest,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.wordService.update(new Uuid(id), dto, user.id);
+    return this.wordService.update(new Uuid(id), requestBody, user.id);
   }
 
   @Delete(':id')

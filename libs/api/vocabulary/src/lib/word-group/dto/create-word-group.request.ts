@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import { CreateWordGroupRequestContract } from '@voclearn/contracts';
 
-export class CreateWordGroupDto {
+export class CreateWordGroupRequest implements CreateWordGroupRequestContract {
   @IsNotEmpty()
   @IsUUID()
   id!: string;

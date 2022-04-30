@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateWordDto } from './dto/create-word.dto';
-import { UpdateWordDto } from './dto/update-word.dto';
+import { CreateWordRequest } from './dto/create-word.request';
+import { UpdateWordRequest } from './dto/update-word.request';
 import { WordEntity } from './word.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -48,7 +48,7 @@ export class WordService {
     return words;
   }
 
-  async create(dto: CreateWordDto, userId: UserId): Promise<void> {
+  async create(dto: CreateWordRequest, userId: UserId): Promise<void> {
     const wordGroup = await this.wordGroupService.get(
       new Uuid(dto.wordGroupId),
       userId
@@ -81,7 +81,11 @@ export class WordService {
     this.logger.debug(`Word ${dto.id} created by user ${userId}`);
   }
 
-  async update(id: Uuid, dto: UpdateWordDto, userId: UserId): Promise<void> {
+  async update(
+    id: Uuid,
+    dto: UpdateWordRequest,
+    userId: UserId
+  ): Promise<void> {
     const word = await this.findOne(id, userId);
 
     if (dto.value !== undefined) {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AssociationContract,
-  CreateWordContract,
-  UpdateWordContract,
+  CreateWordRequestContract,
+  UpdateWordRequestContract,
   WordContract,
   WordGroupContract,
 } from '@voclearn/contracts';
@@ -60,7 +60,7 @@ export class WordComponent implements OnInit {
         const wordGroupId = form.value.wordGroup.id;
         const wordGroupName = form.value.wordGroup.name;
 
-        const createWordContract: CreateWordContract = {
+        const createWordContract: CreateWordRequestContract = {
           id,
           value,
           translation,
@@ -118,7 +118,7 @@ export class WordComponent implements OnInit {
           associationNote !== undefined;
 
         if (hasAnythingChanged) {
-          const contract: UpdateWordContract = {
+          const contract: UpdateWordRequestContract = {
             value,
             translation,
             wordGroupId: wordGroup?.id,

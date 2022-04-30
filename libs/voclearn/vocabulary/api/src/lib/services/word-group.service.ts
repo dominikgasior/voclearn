@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  UpdateWordGroupContract,
+  UpdateWordGroupRequestContract,
   WordGroupContract,
 } from '@voclearn/contracts';
 
@@ -24,7 +24,7 @@ export class WordGroupService {
 
   update(
     wordGroupId: string,
-    contract: UpdateWordGroupContract
+    contract: UpdateWordGroupRequestContract
   ): Observable<void> {
     return this.httpClient.patch<void>(
       `/api/word-group/${wordGroupId}`,

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   AnsweredQuestionContract,
+  AnswerQuestionRequestContract,
   QuestionContract,
 } from '@voclearn/contracts';
 
@@ -16,13 +17,11 @@ export class QuizService {
 
   answerQuestion(
     questionId: string,
-    answer: string
+    contract: AnswerQuestionRequestContract
   ): Observable<AnsweredQuestionContract> {
     return this.httpClient.post<AnsweredQuestionContract>(
       `/api/quiz/question/${questionId}/answer`,
-      {
-        answer,
-      }
+      contract
     );
   }
 }

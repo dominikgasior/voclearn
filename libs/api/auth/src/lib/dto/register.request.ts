@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { RegisterRequestContract } from '@voclearn/contracts';
 
-export class RegisterDto implements RegisterRequestContract {
+export class RegisterRequest implements RegisterRequestContract {
   @IsNotEmpty()
   @IsEmail()
   email!: string;

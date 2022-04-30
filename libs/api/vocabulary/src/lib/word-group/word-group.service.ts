@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateWordGroupDto } from './dto/create-word-group.dto';
-import { UpdateWordGroupDto } from './dto/update-word-group.dto';
+import { CreateWordGroupRequest } from './dto/create-word-group.request';
+import { UpdateWordGroupRequest } from './dto/update-word-group.request';
 import { WordGroupEntity } from './word-group.entity';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { WordGroupRepository } from './word-group.repository';
@@ -38,7 +38,7 @@ export class WordGroupService {
     return wordGroups;
   }
 
-  async create(dto: CreateWordGroupDto, userId: UserId): Promise<void> {
+  async create(dto: CreateWordGroupRequest, userId: UserId): Promise<void> {
     const wordGroup = new WordGroupEntity(dto.id, dto.name, [], userId);
 
     await this.wordGroupRepository.save(wordGroup);
@@ -48,7 +48,7 @@ export class WordGroupService {
 
   async update(
     id: Uuid,
-    dto: UpdateWordGroupDto,
+    dto: UpdateWordGroupRequest,
     userId: UserId
   ): Promise<void> {
     const wordGroup = await this.findOne(id, userId);

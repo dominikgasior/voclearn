@@ -17,8 +17,8 @@ import { AuthService } from './auth.service';
 import { Email } from './dto/email';
 import { FullName } from './dto/full-name';
 import { Password } from './dto/password';
-import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
+import { RegisterRequest } from './dto/register.request';
+import { LoginRequest } from './dto/login.request';
 
 @Controller('/auth')
 export class AuthController {
@@ -26,7 +26,7 @@ export class AuthController {
 
   @Post('/register')
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() requestBody: RegisterDto): Promise<void> {
+  async register(@Body() requestBody: RegisterRequest): Promise<void> {
     return this.authService.register(
       new Email(requestBody.email),
       new FullName(requestBody.firstName, requestBody.lastName),
@@ -37,7 +37,7 @@ export class AuthController {
   @Post('/login')
   @HttpCode(HttpStatus.NO_CONTENT)
   async login(
-    @Body() requestBody: LoginDto,
+    @Body() requestBody: LoginRequest,
     @Res({ passthrough: true }) response: Response
   ): Promise<void> {
     const authenticatedUser = await this.authService.login(

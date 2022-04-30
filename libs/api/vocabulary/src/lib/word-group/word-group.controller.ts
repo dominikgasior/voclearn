@@ -10,8 +10,8 @@ import {
   Get,
 } from '@nestjs/common';
 import { WordGroupService } from './word-group.service';
-import { CreateWordGroupDto } from './dto/create-word-group.dto';
-import { UpdateWordGroupDto } from './dto/update-word-group.dto';
+import { CreateWordGroupRequest } from './dto/create-word-group.request';
+import { UpdateWordGroupRequest } from './dto/update-word-group.request';
 import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { Uuid } from '@voclearn/api/shared/domain';
 import { WordGroup } from './dto/word-group';
@@ -29,20 +29,20 @@ export class WordGroupController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(
-    @Body() dto: CreateWordGroupDto,
+    @Body() requestBody: CreateWordGroupRequest,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.wordGroupService.create(dto, user.id);
+    return this.wordGroupService.create(requestBody, user.id);
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   update(
     @Param('id') id: string,
-    @Body() dto: UpdateWordGroupDto,
+    @Body() requestBody: UpdateWordGroupRequest,
     @AuthUser() user: AuthenticatedUser
   ): Promise<void> {
-    return this.wordGroupService.update(new Uuid(id), dto, user.id);
+    return this.wordGroupService.update(new Uuid(id), requestBody, user.id);
   }
 
   @Delete(':id')

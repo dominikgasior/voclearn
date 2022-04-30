@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  AuthService,
-  Password,
-  Email,
-  FullName,
-} from '@voclearn/voclearn/auth/api';
+import { AuthService } from '@voclearn/voclearn/auth/api';
 
 @Component({
   selector: 'voclearn-register',
@@ -35,11 +30,12 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       this.authService
-        .register(
-          new Email(this.form.value.email),
-          new Password(this.form.value.password),
-          new FullName(this.form.value.firstName, this.form.value.lastName)
-        )
+        .register({
+          email: this.form.value.email,
+          password: this.form.value.password,
+          firstName: this.form.value.firstName,
+          lastName: this.form.value.lastName,
+        })
         .subscribe({
           complete: () => this.router.navigate(['/auth/login']),
         });

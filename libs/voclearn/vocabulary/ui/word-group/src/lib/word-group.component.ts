@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  UpdateWordGroupContract,
+  UpdateWordGroupRequestContract,
   WordContract,
   WordGroupContract,
 } from '@voclearn/contracts';
@@ -77,7 +77,7 @@ export class WordGroupComponent implements OnInit {
         const hasAnythingChanged = name !== undefined;
 
         if (hasAnythingChanged) {
-          const contract: UpdateWordGroupContract = {
+          const contract: UpdateWordGroupRequestContract = {
             name,
           };
 

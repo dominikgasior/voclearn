@@ -39,7 +39,7 @@ export class QuizComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       this.quizService
-        .answerQuestion(this.question.id, this.form.value.answer)
+        .answerQuestion(this.question.id, { answer: this.form.value.answer })
         .subscribe((answeredQuestion) => {
           if (answeredQuestion.isCorrect) {
             this.changeStateForCorrectAnswer();

@@ -1,4 +1,4 @@
-export interface CreateWordContract {
+export interface CreateWordRequestContract {
   id: string;
   value: string;
   translation: string;

@@ -10,7 +10,7 @@ import {
 import { Question } from './dto/question';
 import { QuizService } from './quiz.service';
 import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
-import { AnswerQuestionDto } from './dto/answer-question.dto';
+import { AnswerQuestionRequest } from './dto/answer-question.request';
 import { Uuid } from '@voclearn/api/shared/domain';
 import { AnsweredQuestion } from './dto/answered-question';
 
@@ -28,9 +28,9 @@ export class QuizController {
   @HttpCode(HttpStatus.OK)
   answerQuestion(
     @Param('id') id: string,
-    @Body() dto: AnswerQuestionDto,
+    @Body() requestBody: AnswerQuestionRequest,
     @AuthUser() user: AuthenticatedUser
   ): Promise<AnsweredQuestion> {
-    return this.service.answerQuestion(new Uuid(id), dto, user.id);
+    return this.service.answerQuestion(new Uuid(id), requestBody, user.id);
   }
 }

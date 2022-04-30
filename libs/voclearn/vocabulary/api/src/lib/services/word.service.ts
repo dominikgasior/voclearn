@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
-  CreateWordContract,
-  UpdateWordContract,
+  CreateWordRequestContract,
+  UpdateWordRequestContract,
   WordContract,
 } from '@voclearn/contracts';
 import { Observable } from 'rxjs';
@@ -19,11 +19,14 @@ export class WordService {
     return this.httpClient.delete<void>(`/api/word/${wordId}`);
   }
 
-  create(contract: CreateWordContract): Observable<void> {
+  create(contract: CreateWordRequestContract): Observable<void> {
     return this.httpClient.post<void>('/api/word', contract);
   }
 
-  update(wordId: string, contract: UpdateWordContract): Observable<void> {
+  update(
+    wordId: string,
+    contract: UpdateWordRequestContract
+  ): Observable<void> {
     return this.httpClient.patch<void>(`/api/word/${wordId}`, contract);
   }
 }

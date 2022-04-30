@@ -3,7 +3,7 @@ import { RepetitionClient } from './repetition/repetition.client';
 import { UserId, Uuid } from '@voclearn/api/shared/domain';
 import { Question } from './dto/question';
 import { VocabularyClient } from './vocabulary/vocabulary.client';
-import { AnswerQuestionDto } from './dto/answer-question.dto';
+import { AnswerQuestionRequest } from './dto/answer-question.request';
 import { AnsweredQuestion } from './dto/answered-question';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class QuizService {
 
   async answerQuestion(
     questionId: Uuid,
-    dto: AnswerQuestionDto,
+    dto: AnswerQuestionRequest,
     userId: UserId
   ): Promise<AnsweredQuestion> {
     const correctAnswer = await this.vocabularyClient.getAnswer(

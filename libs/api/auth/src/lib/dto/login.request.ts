@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { LoginRequestContract } from '@voclearn/contracts';
 
-export class LoginDto implements LoginRequestContract {
+export class LoginRequest implements LoginRequestContract {
   @IsNotEmpty()
   @IsEmail()
   email!: string;
