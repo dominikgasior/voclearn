@@ -12,9 +12,9 @@ import {
 import { WordGroupService } from './word-group.service';
 import { CreateWordGroupRequest } from './dto/create-word-group.request';
 import { UpdateWordGroupRequest } from './dto/update-word-group.request';
-import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { Uuid } from '@voclearn/api/shared/domain';
 import { WordGroup } from './dto/word-group';
+import { AuthenticatedUser, AuthUser } from '@voclearn/api/auth';
 
 @Controller('word-group')
 export class WordGroupController {

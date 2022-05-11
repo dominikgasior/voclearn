@@ -12,9 +12,9 @@ import {
 import { WordService } from './word.service';
 import { CreateWordRequest } from './dto/create-word.request';
 import { UpdateWordRequest } from './dto/update-word.request';
-import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { Uuid } from '@voclearn/api/shared/domain';
 import { Word } from './dto/word';
+import { AuthenticatedUser, AuthUser } from '@voclearn/api/auth';
 
 @Controller('word')
 export class WordController {

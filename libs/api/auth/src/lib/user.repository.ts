@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from './dto/user';
 import { Password } from './dto/password';
 import { Credentials } from './dto/credentials';
-import { AuthenticatedUser } from './dto/authenticated-user';
+import { AuthTokens } from './dto/auth-tokens';
 import {
   FirebaseAdmin,
   FirebaseApi,
@@ -26,7 +26,7 @@ export class UserRepository {
     });
   }
 
-  async authenticate(credentials: Credentials): Promise<AuthenticatedUser> {
+  async authenticate(credentials: Credentials): Promise<AuthTokens> {
     const response = await this.firebaseApi.signInWithEmailAndPassword(
       credentials.email.value,
       credentials.password.value

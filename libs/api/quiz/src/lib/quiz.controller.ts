@@ -9,10 +9,10 @@ import {
 } from '@nestjs/common';
 import { Question } from './dto/question';
 import { QuizService } from './quiz.service';
-import { AuthenticatedUser, AuthUser } from '@voclearn/api/shared/rest-api';
 import { AnswerQuestionRequest } from './dto/answer-question.request';
 import { Uuid } from '@voclearn/api/shared/domain';
 import { AnsweredQuestion } from './dto/answered-question';
+import { AuthenticatedUser, AuthUser } from '@voclearn/api/auth';
 
 @Controller('quiz')
 export class QuizController {

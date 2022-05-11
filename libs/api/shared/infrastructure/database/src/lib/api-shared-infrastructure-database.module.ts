@@ -4,6 +4,7 @@ import { DatabaseConfigModule } from './config/database-config.module';
 import { getConfigToken } from '@voclearn/api/shared/infrastructure/config';
 import { DatabaseConfigProvider } from './config/database.config-provider';
 import { DatabaseConfig } from './config/database.config';
+import { init1652301067525 } from './migrations/1652301067525-init';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { DatabaseConfig } from './config/database.config';
           database: config.name,
           autoLoadEntities: true,
           migrationsRun: true,
-          migrations: [],
+          migrations: [init1652301067525],
           logging: true,
         };
       },

@@ -13,7 +13,7 @@ import {
   assertAllAuthCookiesAreDefinedInRequest,
   idTokenCookieKey,
 } from './auth.cookies';
-import { AuthenticatedUser } from './authenticated-user';
+import { AuthenticatedUser } from './dto/authenticated-user';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {

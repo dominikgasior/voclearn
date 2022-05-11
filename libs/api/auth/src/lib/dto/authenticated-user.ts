@@ -1,6 +1,5 @@
-import { Token } from './token';
+import { UserId } from '@voclearn/api/shared/domain';
 
 export interface AuthenticatedUser {
-  idToken: Token;
-  refreshToken: string;
+  id: UserId;
 }

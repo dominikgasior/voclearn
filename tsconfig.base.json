@@ -56,9 +56,6 @@
       "@voclearn/api/shared/infrastructure/transactional": [
         "libs/api/shared/infrastructure/transactional/src/index.ts"
       ],
-      "@voclearn/api/shared/rest-api": [
-        "libs/api/shared/rest-api/src/index.ts"
-      ],
       "@voclearn/api/vocabulary": ["libs/api/vocabulary/src/index.ts"],
       "@voclearn/contracts": ["libs/contracts/src/index.ts"],
       "@voclearn/voclearn/auth/api": ["libs/voclearn/auth/api/src/index.ts"],

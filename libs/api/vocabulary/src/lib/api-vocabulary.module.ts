@@ -3,11 +3,6 @@ import { WordController } from './word/word.controller';
 import { WordService } from './word/word.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WordEntity } from './word/word.entity';
-import {
-  ApiSharedRestApiModule,
-  AuthMiddleware,
-  RefreshTokenAuthMiddleware,
-} from '@voclearn/api/shared/rest-api';
 import { WordGroupController } from './word-group/word-group.controller';
 import { WordGroupService } from './word-group/word-group.service';
 import { WordGroupEntity } from './word-group/word-group.entity';
@@ -20,6 +15,11 @@ import { VocabularyFacade } from './api/vocabulary.facade';
 import { WordMapper } from './word/word.mapper';
 import { AssociationMapper } from './association/association.mapper';
 import { WordGroupMapper } from './word-group/word-group.mapper';
+import {
+  ApiAuthModule,
+  AuthMiddleware,
+  RefreshTokenAuthMiddleware,
+} from '@voclearn/api/auth';
 
 @Module({
   imports: [
@@ -30,7 +30,7 @@ import { WordGroupMapper } from './word-group/word-group.mapper';
       WordGroupRepository,
       AssociationEntity,
     ]),
-    ApiSharedRestApiModule,
+    ApiAuthModule,
     ApiRepetitionModule,
   ],
   providers: [
